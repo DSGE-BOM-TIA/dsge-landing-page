@@ -438,9 +438,11 @@
       </div>
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#about">About Us</a>
+        <a href="#values">Values</a>
         <a href="#mission">Mission</a>
         <a href="#vision">Vision</a>
         <a href="#stakeholders">Stakeholders</a>
+        <a href="#intake">Intake</a>
         <a href="#pathways">Pathways</a>
         <a href="#contact">Contact</a>
         <button class="solid" type="button" onclick="startFlow()">Start</button>
@@ -460,6 +462,9 @@
           <div class="hero-actions">
             <button class="btn primary" type="button" onclick="startFlow()">Start Here</button>
             <a class="btn" href="#about">About DSGE</a>
+            <a class="btn" href="#mission">Mission</a>
+            <a class="btn" href="#vision">Vision</a>
+            <a class="btn" href="#values">Values</a>
             <a class="btn" href="#contact">Contact Now</a>
           </div>
           <div class="metrics">
@@ -483,6 +488,11 @@
           <p class="small-note">Choose the lane that best fits the visitor. The page will jump them to the right section and prefill the intake form.</p>
           <div class="inline-actions">
             <button class="btn" type="button" onclick="chooseStakeholder('partner')">I am a Partner</button>
+            <button class="btn" type="button" onclick="goToSection('about')">About Us</button>
+            <button class="btn" type="button" onclick="goToSection('mission')">Mission</button>
+            <button class="btn" type="button" onclick="goToSection('vision')">Vision</button>
+            <button class="btn" type="button" onclick="goToSection('values')">Values</button>
+            <button class="btn" type="button" onclick="goToSection('contact')">Contact</button>
             <button class="btn" type="button" onclick="chooseStakeholder('operator')">I am an Operator</button>
             <button class="btn" type="button" onclick="chooseStakeholder('training')">I need Training / R&amp;D</button>
           </div>
@@ -528,11 +538,36 @@
         </p>
       </section>
 
+      <section id="mission" class="card section">
+        <h2>Mission</h2>
+        <p>
+          To create transparent, practical systems that turn resource, workforce, and sustainability challenges into measurable operational, economic, and community value.
+        </p>
+      </section>
+
       <section id="vision" class="card section">
         <h2>Vision</h2>
         <p>
           A future where circular operations, measurable impact, workforce pathways, and cross-sector collaboration are easy to understand, easy to verify, and easy to scale.
         </p>
+      </section>
+
+      <section id="values" class="card section">
+        <h2>Values</h2>
+        <div class="grid-3">
+          <div class="panel">
+            <h3>Transparency</h3>
+            <p>Make systems, requirements, and outcomes visible enough for stakeholders to understand and act on.</p>
+          </div>
+          <div class="panel">
+            <h3>Practical Action</h3>
+            <p>Focus on usable workflows, measurable milestones, and deployment-ready solutions rather than vague promises.</p>
+          </div>
+          <div class="panel">
+            <h3>Shared Value</h3>
+            <p>Build models where partners, operators, communities, and learners can all benefit from successful execution.</p>
+          </div>
+        </div>
       </section>
 
       <section id="stakeholders" class="card section">
@@ -663,6 +698,27 @@
 
       <section id="contact" class="card section">
         <h2>Contact</h2>
+        <p>Visible and clickable on desktop and mobile, with all core stakeholder contact details in one place.</p>
+        <div class="contact-list">
+          <div class="contact-item">
+            <span class="contact-label">Email</span>
+            <a href="mailto:tia@dsge-info.com">tia@dsge-info.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Phone</span>
+            <a href="tel:+17348845925">734.884.5925</a>
+            <span>/</span>
+            <a href="tel:+15172828301">517.282.8301</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Address</span>
+            <a href="https://maps.google.com/?q=4860+Washtenaw+Ave+Suite+I+Ann+Arbor+MI+48108" target="_blank" rel="noopener noreferrer">4860 Washtenaw Ave, Suite I, Ann Arbor, MI 48108</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact-details" class="card section" style="display:none;">
+        <h2>Contact</h2>
         <p>Visible and clickable on desktop and mobile.</p>
         <div class="contact-list">
           <div class="contact-item">
@@ -691,8 +747,15 @@
   <script>
     let latestSubmission = null;
 
+    function goToSection(id) {
+      const section = document.getElementById(id);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
     function startFlow() {
-      document.getElementById('stakeholders').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      goToSection('stakeholders');
       document.getElementById('routingStatus').textContent = 'Start clicked. Choose the stakeholder type that best fits this visitor.';
     }
 
@@ -707,7 +770,7 @@
 
     function chooseStakeholder(key) {
       showStakeholder(key);
-      document.getElementById('stakeholders').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      goToSection('stakeholders');
 
       const statusMap = {
         partner: 'Partner selected. Messaging and intake can now be tailored for partnership or pilot discussions.',
