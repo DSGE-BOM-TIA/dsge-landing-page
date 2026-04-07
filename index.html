@@ -3,18 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DSGE Landing Page Fix Pack</title>
+  <title>DSGE V2 Conversion Mode</title>
   <style>
     :root {
-      --bg: #08111f;
-      --panel: rgba(10, 18, 34, 0.86);
-      --panel-2: rgba(16, 27, 48, 0.92);
+      --bg-1: #07101d;
+      --bg-2: #0b1730;
+      --panel: rgba(9, 19, 36, 0.82);
+      --panel-strong: rgba(12, 24, 44, 0.95);
+      --line: rgba(255,255,255,0.12);
       --text: #eef4ff;
       --muted: #b9c5d8;
-      --line: rgba(255,255,255,0.12);
-      --accent: #36c2ff;
-      --accent-2: #5cffc7;
-      --shadow: 0 18px 45px rgba(0,0,0,0.28);
+      --accent: #32c5ff;
+      --accent-2: #5effc8;
+      --warning: #ffd166;
+      --shadow: 0 18px 48px rgba(0,0,0,0.30);
+      --radius: 24px;
     }
 
     * { box-sizing: border-box; }
@@ -22,45 +25,61 @@
     body {
       margin: 0;
       font-family: Inter, Arial, sans-serif;
-      background: linear-gradient(180deg, #07101d 0%, #0b1730 100%);
       color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(50,197,255,0.14), transparent 24%),
+        radial-gradient(circle at left center, rgba(94,255,200,0.09), transparent 28%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
     }
 
     a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+
+    .container {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+    }
 
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 50;
-      backdrop-filter: blur(10px);
-      background: rgba(6, 12, 24, 0.82);
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(4, 10, 20, 0.86);
       border-bottom: 1px solid var(--line);
-    }
-
-    .container {
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto;
     }
 
     .nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 18px;
       padding: 14px 0;
+    }
+
+    .brand-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
 
     .brand {
       font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+    }
+
+    .brand-sub {
+      color: var(--muted);
+      font-size: 0.82rem;
     }
 
     .nav-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
       align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
     }
 
     .nav-links a,
@@ -68,10 +87,9 @@
       border: 0;
       background: transparent;
       color: var(--text);
-      font: inherit;
-      cursor: pointer;
       padding: 10px 12px;
       border-radius: 12px;
+      cursor: pointer;
     }
 
     .nav-links a:hover,
@@ -79,39 +97,67 @@
       background: rgba(255,255,255,0.08);
     }
 
-    .cta {
+    .nav-links .solid {
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #03101c;
+      color: #04101c;
       font-weight: 800;
       box-shadow: var(--shadow);
     }
 
     .hero {
-      padding: 72px 0 36px;
+      padding: 68px 0 30px;
     }
 
-    .hero-card {
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .card {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 28px;
-      padding: 32px;
+      border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
 
+    .hero-main,
+    .hero-side,
+    .section {
+      padding: 28px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 14px;
+    }
+
     h1 {
-      font-size: clamp(2rem, 4vw, 4rem);
-      line-height: 1.05;
+      font-size: clamp(2.2rem, 4vw, 4.3rem);
+      line-height: 1.02;
       margin: 0 0 14px;
+      max-width: 760px;
     }
 
     .lead {
       color: var(--muted);
       font-size: 1.08rem;
+      line-height: 1.7;
       max-width: 760px;
-      line-height: 1.65;
+      margin: 0;
     }
 
-    .hero-actions {
+    .hero-actions,
+    .inline-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
@@ -122,40 +168,80 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 8px;
       min-height: 48px;
       padding: 12px 18px;
       border-radius: 14px;
       border: 1px solid var(--line);
-      background: var(--panel-2);
+      background: rgba(255,255,255,0.04);
       color: var(--text);
+      font-weight: 800;
       cursor: pointer;
-      font-weight: 700;
     }
 
     .btn.primary {
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #04111e;
+      color: #04101c;
       border: 0;
+    }
+
+    .btn.warning {
+      background: rgba(255, 209, 102, 0.12);
+      border-color: rgba(255, 209, 102, 0.35);
+      color: #ffe3a3;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .metric {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.3rem;
+      margin-bottom: 4px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .hero-side h3,
+    .section h2,
+    .section h3 {
+      margin-top: 0;
+    }
+
+    .small-note {
+      color: var(--muted);
+      line-height: 1.6;
     }
 
     .sections {
       display: grid;
       gap: 20px;
-      padding: 12px 0 72px;
+      padding: 8px 0 72px;
     }
 
     .section {
       scroll-margin-top: 92px;
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: var(--shadow);
     }
 
-    .section h2 {
-      margin-top: 0;
-      font-size: clamp(1.4rem, 2.4vw, 2rem);
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
     }
 
     .grid-3 {
@@ -165,16 +251,112 @@
     }
 
     .panel {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--line);
-      border-radius: 18px;
       padding: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.035);
+    }
+
+    .panel p,
+    .section p,
+    .section li,
+    .section label {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .list-clean {
+      padding-left: 18px;
+      margin: 10px 0 0;
+    }
+
+    .stakeholder-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .stakeholder-tab {
+      min-height: 44px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .stakeholder-tab.active {
+      background: linear-gradient(135deg, rgba(50,197,255,0.22), rgba(94,255,200,0.18));
+      border-color: rgba(94,255,200,0.35);
+    }
+
+    .stakeholder-pane { display: none; }
+    .stakeholder-pane.active { display: block; }
+
+    .pathway {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .pathway-step {
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      font-weight: 700;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 13px 14px;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(94,255,200,0.42);
+      box-shadow: 0 0 0 3px rgba(94,255,200,0.12);
+    }
+
+    textarea { min-height: 120px; resize: vertical; }
+
+    .status-box {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
     }
 
     .contact-list {
       display: grid;
       gap: 12px;
-      margin-top: 18px;
+      margin-top: 16px;
     }
 
     .contact-item {
@@ -184,108 +366,304 @@
       gap: 10px;
       padding: 14px 16px;
       border-radius: 16px;
-      background: rgba(255,255,255,0.04);
       border: 1px solid var(--line);
+      background: rgba(255,255,255,0.035);
     }
 
     .contact-label {
-      color: var(--muted);
       min-width: 90px;
-      font-weight: 700;
+      color: var(--muted);
+      font-weight: 800;
     }
 
     .contact-item a {
       color: var(--accent-2);
-      font-weight: 700;
+      font-weight: 800;
       word-break: break-word;
     }
 
     .footer {
-      padding: 0 0 48px;
-      color: var(--muted);
+      padding: 0 0 46px;
       text-align: center;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .pill {
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .grid-2,
+      .grid-3,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 860px) {
-      .nav { align-items: flex-start; flex-direction: column; }
-      .grid-3 { grid-template-columns: 1fr; }
-      .hero-card, .section { padding: 22px; }
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .hero-main,
+      .hero-side,
+      .section {
+        padding: 22px;
+      }
+      .metrics {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="container nav">
-      <div class="brand">DSGE, LLC</div>
+      <div class="brand-wrap">
+        <div class="brand">DSGE, LLC</div>
+        <div class="brand-sub">Circular operations • workforce pathways • visible impact</div>
+      </div>
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#about">About Us</a>
         <a href="#mission">Mission</a>
         <a href="#vision">Vision</a>
+        <a href="#stakeholders">Stakeholders</a>
+        <a href="#pathways">Pathways</a>
         <a href="#contact">Contact</a>
-        <button class="cta" type="button" onclick="goToStakeholders()">Stakeholders</button>
+        <button class="solid" type="button" onclick="startFlow()">Start</button>
       </nav>
     </div>
   </header>
 
   <main>
     <section class="hero">
-      <div class="container">
-        <div class="hero-card">
-          <h1>Turning circularity into visible, operational value.</h1>
+      <div class="container hero-grid">
+        <div class="card hero-main">
+          <div class="eyebrow">Built for partners, operators, universities, workforce and community stakeholders</div>
+          <h1>DSGE converts mission into an actionable stakeholder pathway.</h1>
           <p class="lead">
-            DSGE helps partners move from fragmented sustainability activity to a practical, measurable, stakeholder-ready operating model.
+            This V2 page is designed for conversion. It gives visitors a clear entry point, shows who DSGE serves, explains the mission and vision, and captures stakeholder interest in a usable format.
           </p>
           <div class="hero-actions">
-            <button class="btn primary" type="button" onclick="goToStakeholders()">Start</button>
-            <a class="btn" href="#about">Learn About DSGE</a>
+            <button class="btn primary" type="button" onclick="startFlow()">Start Here</button>
+            <a class="btn" href="#about">About DSGE</a>
+            <a class="btn" href="#contact">Contact Now</a>
+          </div>
+          <div class="metrics">
+            <div class="metric">
+              <strong>1 page</strong>
+              <span>Simple stakeholder-first flow with visible mission, vision, contact, and engagement capture.</span>
+            </div>
+            <div class="metric">
+              <strong>3 pathways</strong>
+              <span>Partner, operator, and training/research views with tailored messaging.</span>
+            </div>
+            <div class="metric">
+              <strong>Instant action</strong>
+              <span>Clickable phone, email, map address, and a working intake form with export-ready capture.</span>
+            </div>
           </div>
         </div>
+
+        <aside class="card hero-side">
+          <h3>Quick stakeholder routing</h3>
+          <p class="small-note">Choose the lane that best fits the visitor. The page will jump them to the right section and prefill the intake form.</p>
+          <div class="inline-actions">
+            <button class="btn" type="button" onclick="chooseStakeholder('partner')">I am a Partner</button>
+            <button class="btn" type="button" onclick="chooseStakeholder('operator')">I am an Operator</button>
+            <button class="btn" type="button" onclick="chooseStakeholder('training')">I need Training / R&amp;D</button>
+          </div>
+          <div class="status-box" id="routingStatus">No stakeholder selected yet.</div>
+          <div class="pill-row">
+            <span class="pill">University partnerships</span>
+            <span class="pill">Workforce development</span>
+            <span class="pill">R&amp;D collaboration</span>
+            <span class="pill">Deployment readiness</span>
+          </div>
+        </aside>
       </div>
     </section>
 
     <div class="container sections">
-      <section id="about" class="section">
+      <section id="about" class="card section">
         <h2>About Us</h2>
-        <p>
-          DSGE, LLC is building a stakeholder-facing circularity and operational intelligence platform designed to help organizations see opportunity, align partners, and act with confidence.
-        </p>
-      </section>
-
-      <section id="mission" class="section">
-        <h2>Mission</h2>
-        <p>
-          To deliver practical, transparent systems that convert resource, workforce, and sustainability challenges into measurable economic and community value.
-        </p>
-      </section>
-
-      <section id="vision" class="section">
-        <h2>Vision</h2>
-        <p>
-          A future where circular operations, workforce development, and measurable local impact are easy to understand, easy to verify, and easy to scale.
-        </p>
-      </section>
-
-      <section id="stakeholders" class="section">
-        <h2>Stakeholder Entry</h2>
-        <div class="grid-3">
+        <div class="grid-2">
           <div class="panel">
-            <h3>Partners</h3>
-            <p>View value proposition, deployment model, and shared outcomes.</p>
+            <p>
+              DSGE, LLC is building a practical operating model that helps organizations see, measure, and act on circularity, workforce development, and local economic value.
+            </p>
+            <p>
+              The goal is not only to inform stakeholders, but to give them a usable path to engage, pilot, partner, train, and scale.
+            </p>
           </div>
           <div class="panel">
-            <h3>Operators</h3>
-            <p>See workflows, requirements, and operational readiness information.</p>
-          </div>
-          <div class="panel">
-            <h3>Community & Training</h3>
-            <p>Review education, research, workforce, and collaboration pathways.</p>
+            <h3>Who this page is for</h3>
+            <ul class="list-clean">
+              <li>Industry partners and site hosts</li>
+              <li>Workforce development organizations</li>
+              <li>Universities, vocational schools, and R&amp;D collaborators</li>
+              <li>Public and private stakeholders evaluating deployment readiness</li>
+            </ul>
           </div>
         </div>
       </section>
 
-      <section id="contact" class="section">
+      <section id="mission" class="card section">
+        <h2>Mission</h2>
+        <p>
+          To create transparent, practical systems that turn resource, workforce, and sustainability challenges into measurable operational, economic, and community value.
+        </p>
+      </section>
+
+      <section id="vision" class="card section">
+        <h2>Vision</h2>
+        <p>
+          A future where circular operations, measurable impact, workforce pathways, and cross-sector collaboration are easy to understand, easy to verify, and easy to scale.
+        </p>
+      </section>
+
+      <section id="stakeholders" class="card section">
+        <h2>Stakeholder Pathways</h2>
+        <p>Select a stakeholder type to see the most relevant value proposition and next steps.</p>
+
+        <div class="stakeholder-tabs">
+          <button class="stakeholder-tab active" type="button" data-target="partner" onclick="showStakeholder('partner')">Partners</button>
+          <button class="stakeholder-tab" type="button" data-target="operator" onclick="showStakeholder('operator')">Operators</button>
+          <button class="stakeholder-tab" type="button" data-target="training" onclick="showStakeholder('training')">Training / R&amp;D</button>
+        </div>
+
+        <div id="partner" class="stakeholder-pane active panel">
+          <h3>For Partners</h3>
+          <p>See how DSGE supports deployment, compliance alignment, visibility, and shared-value outcomes without making the stakeholder decode a complex system alone.</p>
+          <div class="pathway">
+            <div class="pathway-step"><strong>Step 1:</strong> Identify site, material, workforce, or reporting need.</div>
+            <div class="pathway-step"><strong>Step 2:</strong> Review stakeholder fit, deployment requirements, and potential pilot scope.</div>
+            <div class="pathway-step"><strong>Step 3:</strong> Submit interest for follow-up, pilot planning, or partnership discussion.</div>
+          </div>
+        </div>
+
+        <div id="operator" class="stakeholder-pane panel">
+          <h3>For Operators</h3>
+          <p>Understand the work breakdown, staffing expectations, training needs, and what operational readiness looks like on the ground.</p>
+          <div class="pathway">
+            <div class="pathway-step"><strong>Step 1:</strong> Review role expectations and required capabilities.</div>
+            <div class="pathway-step"><strong>Step 2:</strong> Confirm staffing, safety, workflow, and reporting requirements.</div>
+            <div class="pathway-step"><strong>Step 3:</strong> Request operational briefing or readiness review.</div>
+          </div>
+        </div>
+
+        <div id="training" class="stakeholder-pane panel">
+          <h3>For Training, Research, and University Partners</h3>
+          <p>Explore collaboration around workforce pipelines, research pilots, vocational pathways, curriculum support, and applied innovation.</p>
+          <div class="pathway">
+            <div class="pathway-step"><strong>Step 1:</strong> Align interests around workforce, research, or instructional collaboration.</div>
+            <div class="pathway-step"><strong>Step 2:</strong> Define the pilot, lab, training, or applied-learning opportunity.</div>
+            <div class="pathway-step"><strong>Step 3:</strong> Submit collaboration interest and desired next step.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pathways" class="card section">
+        <h2>Required Pathways Visible to Stakeholders</h2>
+        <div class="grid-3">
+          <div class="panel">
+            <h3>Mission / Vision</h3>
+            <p>Immediate visibility so stakeholders understand purpose before they are asked to act.</p>
+          </div>
+          <div class="panel">
+            <h3>Careers, not jobs</h3>
+            <p>Pathways emphasize capability-building, advancement, and structured participation rather than one-off roles.</p>
+          </div>
+          <div class="panel">
+            <h3>R&amp;D + education</h3>
+            <p>University, vocational, and innovation partnerships are called out as part of the operating model.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="intake" class="card section">
+        <h2>Stakeholder Intake</h2>
+        <p>This form is built for conversion mode. It captures interest locally in the browser and can export the submission for operator follow-up.</p>
+
+        <form id="stakeholderForm">
+          <div class="form-grid">
+            <label>
+              Stakeholder Type
+              <select id="stakeholderType" name="stakeholderType" required>
+                <option value="">Select one</option>
+                <option value="Partner">Partner</option>
+                <option value="Operator">Operator</option>
+                <option value="Training / R&D">Training / R&amp;D</option>
+                <option value="Investor / Supporter">Investor / Supporter</option>
+                <option value="Community">Community</option>
+              </select>
+            </label>
+            <label>
+              Organization Name
+              <input id="organizationName" name="organizationName" type="text" placeholder="Organization or group name" required />
+            </label>
+          </div>
+
+          <div class="form-grid">
+            <label>
+              Contact Name
+              <input id="contactName" name="contactName" type="text" placeholder="Full name" required />
+            </label>
+            <label>
+              Email
+              <input id="contactEmail" name="contactEmail" type="email" placeholder="name@example.com" required />
+            </label>
+          </div>
+
+          <div class="form-grid">
+            <label>
+              Phone
+              <input id="contactPhone" name="contactPhone" type="tel" placeholder="(555) 555-5555" />
+            </label>
+            <label>
+              Requested Next Step
+              <select id="nextStep" name="nextStep" required>
+                <option value="">Select one</option>
+                <option>Schedule stakeholder call</option>
+                <option>Request pilot discussion</option>
+                <option>Request operator briefing</option>
+                <option>Explore training / university partnership</option>
+                <option>General information</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            What do you need help with?
+            <textarea id="message" name="message" placeholder="Describe interest, challenge, project, site, training need, or partnership goal."></textarea>
+          </label>
+
+          <div class="inline-actions">
+            <button class="btn primary" type="submit">Save Submission</button>
+            <button class="btn" type="button" onclick="downloadSubmission()">Download Latest Submission</button>
+            <button class="btn warning" type="button" onclick="clearSubmission()">Clear</button>
+          </div>
+        </form>
+
+        <div class="status-box" id="formStatus">No submission saved yet.</div>
+      </section>
+
+      <section id="contact" class="card section">
         <h2>Contact</h2>
-        <p>All key contact details are visible and selectable below.</p>
+        <p>Visible and clickable on desktop and mobile.</p>
         <div class="contact-list">
           <div class="contact-item">
             <span class="contact-label">Email</span>
@@ -294,14 +672,12 @@
           <div class="contact-item">
             <span class="contact-label">Phone</span>
             <a href="tel:+17348845925">734.884.5925</a>
-            <span> / </span>
+            <span>/</span>
             <a href="tel:+15172828301">517.282.8301</a>
           </div>
           <div class="contact-item">
             <span class="contact-label">Address</span>
-            <a href="https://maps.google.com/?q=4860+Washtenaw+Ave+Suite+I+Ann+Arbor+MI+48108" target="_blank" rel="noopener noreferrer">
-              4860 Washtenaw Ave, Suite I, Ann Arbor, MI 48108
-            </a>
+            <a href="https://maps.google.com/?q=4860+Washtenaw+Ave+Suite+I+Ann+Arbor+MI+48108" target="_blank" rel="noopener noreferrer">4860 Washtenaw Ave, Suite I, Ann Arbor, MI 48108</a>
           </div>
         </div>
       </section>
@@ -309,16 +685,122 @@
   </main>
 
   <footer class="footer">
-    <div class="container">© DSGE, LLC</div>
+    <div class="container">© DSGE, LLC • V2 Conversion Mode</div>
   </footer>
 
   <script>
-    function goToStakeholders() {
-      const section = document.getElementById('stakeholders');
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+    let latestSubmission = null;
+
+    function startFlow() {
+      document.getElementById('stakeholders').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('routingStatus').textContent = 'Start clicked. Choose the stakeholder type that best fits this visitor.';
     }
+
+    function showStakeholder(key) {
+      document.querySelectorAll('.stakeholder-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.target === key);
+      });
+      document.querySelectorAll('.stakeholder-pane').forEach(pane => {
+        pane.classList.toggle('active', pane.id === key);
+      });
+    }
+
+    function chooseStakeholder(key) {
+      showStakeholder(key);
+      document.getElementById('stakeholders').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      const statusMap = {
+        partner: 'Partner selected. Messaging and intake can now be tailored for partnership or pilot discussions.',
+        operator: 'Operator selected. The page is now focused on readiness, staffing, and workflow needs.',
+        training: 'Training / R&D selected. The page is now focused on collaboration, pathways, and applied learning.'
+      };
+
+      const intakeMap = {
+        partner: 'Partner',
+        operator: 'Operator',
+        training: 'Training / R&D'
+      };
+
+      const nextStepMap = {
+        partner: 'Request pilot discussion',
+        operator: 'Request operator briefing',
+        training: 'Explore training / university partnership'
+      };
+
+      document.getElementById('routingStatus').textContent = statusMap[key] || 'Stakeholder selected.';
+      document.getElementById('stakeholderType').value = intakeMap[key] || '';
+      document.getElementById('nextStep').value = nextStepMap[key] || '';
+    }
+
+    document.getElementById('stakeholderForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const data = {
+        stakeholderType: document.getElementById('stakeholderType').value,
+        organizationName: document.getElementById('organizationName').value,
+        contactName: document.getElementById('contactName').value,
+        contactEmail: document.getElementById('contactEmail').value,
+        contactPhone: document.getElementById('contactPhone').value,
+        nextStep: document.getElementById('nextStep').value,
+        message: document.getElementById('message').value,
+        savedAt: new Date().toISOString()
+      };
+
+      latestSubmission = data;
+      localStorage.setItem('dsgeStakeholderSubmission', JSON.stringify(data));
+
+      document.getElementById('formStatus').textContent = 'Submission saved locally in this browser. Use Download Latest Submission to export it for follow-up.';
+    });
+
+    function downloadSubmission() {
+      const stored = latestSubmission || JSON.parse(localStorage.getItem('dsgeStakeholderSubmission') || 'null');
+      if (!stored) {
+        document.getElementById('formStatus').textContent = 'No saved submission found to download yet.';
+        return;
+      }
+
+      const lines = [
+        'DSGE Stakeholder Intake',
+        'Saved At: ' + stored.savedAt,
+        'Stakeholder Type: ' + stored.stakeholderType,
+        'Organization Name: ' + stored.organizationName,
+        'Contact Name: ' + stored.contactName,
+        'Email: ' + stored.contactEmail,
+        'Phone: ' + stored.contactPhone,
+        'Requested Next Step: ' + stored.nextStep,
+        'Message: ' + stored.message
+      ].join('
+');
+
+      const blob = new Blob([lines], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'dsge-stakeholder-intake.txt';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+
+      document.getElementById('formStatus').textContent = 'Latest submission downloaded.';
+    }
+
+    function clearSubmission() {
+      localStorage.removeItem('dsgeStakeholderSubmission');
+      latestSubmission = null;
+      document.getElementById('stakeholderForm').reset();
+      document.getElementById('formStatus').textContent = 'Saved submission cleared.';
+      document.getElementById('routingStatus').textContent = 'No stakeholder selected yet.';
+      showStakeholder('partner');
+    }
+
+    window.addEventListener('DOMContentLoaded', function () {
+      const stored = JSON.parse(localStorage.getItem('dsgeStakeholderSubmission') || 'null');
+      if (stored) {
+        latestSubmission = stored;
+        document.getElementById('formStatus').textContent = 'A previous submission was found in local browser storage and is ready to download or replace.';
+      }
+    });
   </script>
 </body>
 </html>
