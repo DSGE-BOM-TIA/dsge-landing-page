@@ -438,12 +438,12 @@
       </div>
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#about">About Us</a>
-        <a href="#values">Values</a>
         <a href="#mission">Mission</a>
         <a href="#vision">Vision</a>
+        <a href="#values">Values</a>
         <a href="#stakeholders">Stakeholders</a>
+        <a href="#deployment-plan">Request Deployment Plan</a>
         <a href="#intake">Intake</a>
-        <a href="#pathways">Pathways</a>
         <a href="#contact">Contact</a>
         <button class="solid" type="button" onclick="startFlow()">Start</button>
       </nav>
@@ -460,12 +460,12 @@
             This V2 page is designed for conversion. It gives visitors a clear entry point, shows who DSGE serves, explains the mission and vision, and captures stakeholder interest in a usable format.
           </p>
           <div class="hero-actions">
-            <button class="btn primary" type="button" onclick="startFlow()">Start Here</button>
-            <a class="btn" href="#about">About DSGE</a>
-            <a class="btn" href="#mission">Mission</a>
-            <a class="btn" href="#vision">Vision</a>
-            <a class="btn" href="#values">Values</a>
-            <a class="btn" href="#contact">Contact Now</a>
+            <button class="btn primary" type="button" onclick="startFlow()">Start</button>
+            <button class="btn" type="button" onclick="goToSection('stakeholders')">Stakeholders</button>
+            <button class="btn" type="button" onclick="goToSection('deployment-plan')">Request Deployment Plan</button>
+            <button class="btn" type="button" onclick="goToSection('about')">About Us</button>
+            <button class="btn" type="button" onclick="goToSection('contact')">Contact</button>
+            <button class="btn" type="button" onclick="goToSection('intake')">Intake</button>
           </div>
           <div class="metrics">
             <div class="metric">
@@ -497,6 +497,11 @@
             <button class="btn" type="button" onclick="chooseStakeholder('training')">I need Training / R&amp;D</button>
           </div>
           <div class="status-box" id="routingStatus">No stakeholder selected yet.</div>
+          <div class="inline-actions">
+            <button class="btn" type="button" onclick="goToSection('stakeholders')">Open Stakeholder Section</button>
+            <button class="btn" type="button" onclick="goToSection('deployment-plan')">Request Deployment Plan</button>
+            <button class="btn" type="button" onclick="goToSection('intake')">Open Intake</button>
+          </div>
           <div class="pill-row">
             <span class="pill">University partnerships</span>
             <span class="pill">Workforce development</span>
@@ -611,6 +616,34 @@
         </div>
       </section>
 
+      <section id="deployment-plan" class="card section">
+        <h2>Request Deployment Plan</h2>
+        <p>Stakeholders can use this section to request a pilot, operator briefing, rollout discussion, or deployment planning review.</p>
+        <div class="grid-3">
+          <div class="panel">
+            <h3>Pilot Request</h3>
+            <p>Route stakeholders to a focused conversation about site readiness, scope, timing, and pilot structure.</p>
+            <div class="inline-actions">
+              <button class="btn" type="button" onclick="prefillDeployment('Request pilot discussion')">Request Pilot Discussion</button>
+            </div>
+          </div>
+          <div class="panel">
+            <h3>Operator Briefing</h3>
+            <p>Let operators or implementation teams jump straight into readiness, staffing, and execution needs.</p>
+            <div class="inline-actions">
+              <button class="btn" type="button" onclick="prefillDeployment('Request operator briefing')">Request Operator Briefing</button>
+            </div>
+          </div>
+          <div class="panel">
+            <h3>Deployment Review</h3>
+            <p>For institutions, partners, and host sites that want a structured deployment plan request and follow-up path.</p>
+            <div class="inline-actions">
+              <button class="btn" type="button" onclick="prefillDeployment('Schedule stakeholder call')">Request Deployment Review</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="pathways" class="card section">
         <h2>Required Pathways Visible to Stakeholders</h2>
         <div class="grid-3">
@@ -717,26 +750,7 @@
         </div>
       </section>
 
-      <section id="contact-details" class="card section" style="display:none;">
-        <h2>Contact</h2>
-        <p>Visible and clickable on desktop and mobile.</p>
-        <div class="contact-list">
-          <div class="contact-item">
-            <span class="contact-label">Email</span>
-            <a href="mailto:tia@dsge-info.com">tia@dsge-info.com</a>
-          </div>
-          <div class="contact-item">
-            <span class="contact-label">Phone</span>
-            <a href="tel:+17348845925">734.884.5925</a>
-            <span>/</span>
-            <a href="tel:+15172828301">517.282.8301</a>
-          </div>
-          <div class="contact-item">
-            <span class="contact-label">Address</span>
-            <a href="https://maps.google.com/?q=4860+Washtenaw+Ave+Suite+I+Ann+Arbor+MI+48108" target="_blank" rel="noopener noreferrer">4860 Washtenaw Ave, Suite I, Ann Arbor, MI 48108</a>
-          </div>
-        </div>
-      </section>
+      
     </div>
   </main>
 
@@ -756,7 +770,7 @@
 
     function startFlow() {
       goToSection('stakeholders');
-      document.getElementById('routingStatus').textContent = 'Start clicked. Choose the stakeholder type that best fits this visitor.';
+      document.getElementById('routingStatus').textContent = 'Start clicked. Choose a stakeholder path, open intake, or request a deployment plan.';
     }
 
     function showStakeholder(key) {
@@ -766,6 +780,12 @@
       document.querySelectorAll('.stakeholder-pane').forEach(pane => {
         pane.classList.toggle('active', pane.id === key);
       });
+    }
+
+    function prefillDeployment(step) {
+      goToSection('intake');
+      document.getElementById('nextStep').value = step;
+      document.getElementById('routingStatus').textContent = step + ' selected. Intake is ready below.';
     }
 
     function chooseStakeholder(key) {
