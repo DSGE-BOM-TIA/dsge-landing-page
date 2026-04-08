@@ -1,214 +1,28 @@
-import React from "react";
-import {
-  ArrowRight,
-  Building2,
-  CheckCircle2,
-  Clock3,
-  Mail,
-  MapPinned,
-  Phone,
-  Recycle,
-  ShieldCheck,
-  Target,
-  Users,
-  Zap,
-} from "lucide-react";
+<section id="stakeholders">
+  <h2>Mission · Vision · Values</h2>
 
-function scrollToId(id: string) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-function PillButton({
-  children,
-  onClick,
-  primary = false,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-  primary?: boolean;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={
-        primary
-          ? "inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-400 px-5 py-3 text-sm font-medium text-slate-950 transition hover:translate-y-[-1px]"
-          : "inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-slate-100 transition hover:border-white/20 hover:bg-white/10"
-      }
-    >
-      {children}
-    </button>
-  );
-}
-
-function SectionTitle({
-  eyebrow,
-  title,
-  subtitle,
-}: {
-  eyebrow: string;
-  title: string;
-  subtitle: string;
-}) {
-  return (
-    <div className="max-w-3xl">
-      <div className="mb-3 inline-flex rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.24em] text-emerald-300">
-        {eyebrow}
-      </div>
-      <h2 className="text-3xl font-semibold tracking-tight text-white md:text-5xl">{title}</h2>
-      <p className="mt-4 text-sm leading-7 text-slate-300 md:text-base">{subtitle}</p>
+  <div className="grid md:grid-cols-3 gap-5 mt-6">
+    
+    <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+      <h3 className="text-white font-semibold">Mission</h3>
+      <p className="text-slate-400 mt-3">
+        Deploy practical circular systems that convert material into measurable value and operational visibility.
+      </p>
     </div>
-  );
-}
 
-function Card({
-  icon: Icon,
-  title,
-  body,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  body: string;
-}) {
-  return (
-    <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/10">
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-300/10 ring-1 ring-emerald-300/15">
-        <Icon className="h-5 w-5 text-emerald-300" />
-      </div>
-      <h3 className="mt-5 text-lg font-semibold text-white">{title}</h3>
-      <p className="mt-3 text-sm leading-7 text-slate-400">{body}</p>
+    <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+      <h3 className="text-white font-semibold">Vision</h3>
+      <p className="text-slate-400 mt-3">
+        A scalable regional system where diversion, workforce, and ESG outcomes operate as one coordinated model.
+      </p>
     </div>
-  );
-}
 
-export default function DSGELandingPage() {
-  const publicEmail = "tia@dsge-info.com";
-  const phoneOne = "734.884.5925";
-  const phoneTwo = "517.282.8301";
-  const publicAddress = "4860 Washtenaw Ave Suite I, Ann Arbor, MI 48108";
+    <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+      <h3 className="text-white font-semibold">Values</h3>
+      <p className="text-slate-400 mt-3">
+        Integrity · Readiness · Partnership · Practical Innovation
+      </p>
+    </div>
 
-  return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,#113127_0%,#09111d_38%,#04070d_100%)] text-slate-100">
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/65 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6">
-          <button onClick={() => scrollToId("top")} className="flex items-center gap-3 text-left" aria-label="Go to top">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-400/15 ring-1 ring-emerald-300/20">
-              <Recycle className="h-5 w-5 text-emerald-300" />
-            </div>
-            <div>
-              <div className="text-sm font-semibold tracking-[0.24em] text-slate-200">DSGE</div>
-              <div className="text-xs text-slate-400">Circular deployment intelligence</div>
-            </div>
-          </button>
-
-          <nav className="hidden items-center gap-6 text-sm text-slate-300 md:flex" aria-label="Primary">
-            <button onClick={() => scrollToId("value")} className="transition hover:text-white">Value</button>
-            <button onClick={() => scrollToId("capabilities")} className="transition hover:text-white">Capabilities</button>
-            <button onClick={() => scrollToId("response")} className="transition hover:text-white">Response</button>
-            <button onClick={() => scrollToId("stakeholders")} className="transition hover:text-white">Stakeholders</button>
-            <button onClick={() => scrollToId("start")} className="transition hover:text-white">Start</button>
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => scrollToId("stakeholders")}
-              className="hidden rounded-2xl border border-white/10 px-4 py-2 text-sm text-slate-200 transition hover:border-white/20 hover:bg-white/5 md:inline-flex"
-            >
-              Mission / Vision / Values
-            </button>
-            <button
-              onClick={() => scrollToId("start")}
-              className="inline-flex items-center gap-2 rounded-2xl bg-emerald-400 px-4 py-2 text-sm font-medium text-slate-950 transition hover:translate-y-[-1px]"
-            >
-              Start <ArrowRight className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <main id="top">
-        <section className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(16,185,129,0.14),transparent_35%,rgba(59,130,246,0.08)_70%,transparent)]" />
-          <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-20 md:px-6 md:py-28 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
-            <div>
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-300/15 bg-emerald-300/10 px-3 py-1 text-xs uppercase tracking-[0.22em] text-emerald-200">
-                <Zap className="h-3.5 w-3.5" /> Mission-ready circular operations
-              </div>
-              <h1 className="max-w-4xl text-4xl font-semibold leading-tight tracking-tight text-white md:text-6xl">
-                Convert Waste Into Revenue
-              </h1>
-              <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
-                DSGE deploys circular systems that reduce cost, improve traceability, and unlock measurable value.
-              </p>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <PillButton primary onClick={() => scrollToId("start")}>
-                  Request Deployment Plan <ArrowRight className="h-4 w-4" />
-                </PillButton>
-                <PillButton onClick={() => scrollToId("value")}>
-                  Explore Model <ArrowRight className="h-4 w-4" />
-                </PillButton>
-              </div>
-            </div>
-
-            <div className="rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-[0_20px_80px_-20px_rgba(0,0,0,0.65)] backdrop-blur-xl">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="rounded-3xl border border-white/10 bg-slate-950/50 p-5">
-                  <div className="flex items-center gap-3 text-sm font-medium text-slate-200">
-                    <Target className="h-4 w-4 text-emerald-300" /> Revenue visibility
-                  </div>
-                  <p className="mt-3 text-sm leading-7 text-slate-400">
-                    Position diversion as a measurable business function instead of an unmanaged cost center.
-                  </p>
-                </div>
-                <div className="rounded-3xl border border-white/10 bg-slate-950/50 p-5">
-                  <div className="flex items-center gap-3 text-sm font-medium text-slate-200">
-                    <ShieldCheck className="h-4 w-4 text-emerald-300" /> Traceable workflow
-                  </div>
-                  <p className="mt-3 text-sm leading-7 text-slate-400">
-                    Build cleaner chain-of-custody discipline across collection, movement, and reporting.
-                  </p>
-                </div>
-                <div className="rounded-3xl border border-white/10 bg-slate-950/50 p-5">
-                  <div className="flex items-center gap-3 text-sm font-medium text-slate-200">
-                    <Users className="h-4 w-4 text-emerald-300" /> Stakeholder alignment
-                  </div>
-                  <p className="mt-3 text-sm leading-7 text-slate-400">
-                    Give operators, leadership, partners, and public stakeholders a shared operating picture.
-                  </p>
-                </div>
-                <div className="rounded-3xl border border-white/10 bg-slate-950/50 p-5">
-                  <div className="flex items-center gap-3 text-sm font-medium text-slate-200">
-                    <Clock3 className="h-4 w-4 text-emerald-300" /> Fast response
-                  </div>
-                  <p className="mt-3 text-sm leading-7 text-slate-400">
-                    Support rapid activation for planned deployments and no-notice material events.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="value" className="mx-auto max-w-7xl px-4 py-20 md:px-6">
-          <SectionTitle
-            eyebrow="Value"
-            title="What DSGE delivers"
-            subtitle="This button now lands on a real value section instead of feeling decorative."
-          />
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
-            <Card icon={Recycle} title="Convert waste into revenue" body="Create visible value from recyclable streams through structured deployment and reporting." />
-            <Card icon={ShieldCheck} title="Reduce operational cost" body="Improve handling discipline, reduce avoidable losses, and support more efficient diversion decisions." />
-            <Card icon={CheckCircle2} title="Enable traceable workflows" body="Document what moved, where it went, and how the work supports measurable stakeholder outcomes." />
-          </div>
-        </section>
-
-        <section id="capabilities" className="bg-white/[0.03] py-20">
-          <div className="mx-auto max-w-7xl px-4 md:px-6">
-            <SectionTitle
-              eyebrow="Capabilities"
-              title="Core capabilities"
-              subtitle="The Capabilities button now scrolls to the delivery model already implied by the page."
-            />
-            <
+  </div>
+</section>
