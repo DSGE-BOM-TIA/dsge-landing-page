@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DSGE V2 Conversion Mode</title>
+  <title>DSGE V2 Simplified Conversion</title>
   <style>
     :root {
-      --bg-1: #07101d;
-      --bg-2: #0b1730;
-      --panel: rgba(9, 19, 36, 0.82);
-      --panel-strong: rgba(12, 24, 44, 0.95);
+      --bg-top: #07101d;
+      --bg-bottom: #0b1730;
+      --panel: rgba(11, 21, 40, 0.86);
+      --panel-soft: rgba(255,255,255,0.04);
       --line: rgba(255,255,255,0.12);
       --text: #eef4ff;
-      --muted: #b9c5d8;
-      --accent: #32c5ff;
-      --accent-2: #5effc8;
-      --warning: #ffd166;
-      --shadow: 0 18px 48px rgba(0,0,0,0.30);
+      --muted: #b8c6da;
+      --accent: #33c6ff;
+      --accent-2: #62ffd0;
+      --shadow: 0 18px 48px rgba(0,0,0,0.28);
       --radius: 24px;
     }
 
@@ -27,16 +26,16 @@
       font-family: Inter, Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top right, rgba(50,197,255,0.14), transparent 24%),
-        radial-gradient(circle at left center, rgba(94,255,200,0.09), transparent 28%),
-        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+        radial-gradient(circle at top right, rgba(51,198,255,0.14), transparent 22%),
+        radial-gradient(circle at left center, rgba(98,255,208,0.09), transparent 26%),
+        linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
     }
 
     a { color: inherit; text-decoration: none; }
     button, input, select, textarea { font: inherit; }
 
     .container {
-      width: min(1200px, calc(100% - 32px));
+      width: min(1160px, calc(100% - 32px));
       margin: 0 auto;
     }
 
@@ -45,7 +44,7 @@
       top: 0;
       z-index: 100;
       backdrop-filter: blur(12px);
-      background: rgba(4, 10, 20, 0.86);
+      background: rgba(5, 11, 22, 0.84);
       border-bottom: 1px solid var(--line);
     }
 
@@ -57,21 +56,10 @@
       padding: 14px 0;
     }
 
-    .brand-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
     .brand {
       font-size: 1.05rem;
       font-weight: 900;
       letter-spacing: 0.06em;
-    }
-
-    .brand-sub {
-      color: var(--muted);
-      font-size: 0.82rem;
     }
 
     .nav-links {
@@ -100,32 +88,24 @@
     .nav-links .solid {
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       color: #04101c;
-      font-weight: 800;
+      font-weight: 900;
       box-shadow: var(--shadow);
     }
 
     .hero {
-      padding: 68px 0 30px;
+      padding: 74px 0 32px;
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 20px;
-      align-items: stretch;
-    }
-
-    .card {
+    .hero-card,
+    .section {
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
 
-    .hero-main,
-    .hero-side,
-    .section {
-      padding: 28px;
+    .hero-card {
+      padding: 34px;
     }
 
     .eyebrow {
@@ -142,8 +122,8 @@
     }
 
     h1 {
-      font-size: clamp(2.2rem, 4vw, 4.3rem);
-      line-height: 1.02;
+      font-size: clamp(2.2rem, 4vw, 4.2rem);
+      line-height: 1.04;
       margin: 0 0 14px;
       max-width: 760px;
     }
@@ -185,12 +165,6 @@
       border: 0;
     }
 
-    .btn.warning {
-      background: rgba(255, 209, 102, 0.12);
-      border-color: rgba(255, 209, 102, 0.35);
-      color: #ffe3a3;
-    }
-
     .metrics {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -207,7 +181,7 @@
 
     .metric strong {
       display: block;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       margin-bottom: 4px;
     }
 
@@ -217,25 +191,27 @@
       line-height: 1.45;
     }
 
-    .hero-side h3,
+    .sections {
+      display: grid;
+      gap: 20px;
+      padding: 10px 0 72px;
+    }
+
+    .section {
+      padding: 28px;
+      scroll-margin-top: 92px;
+    }
+
     .section h2,
     .section h3 {
       margin-top: 0;
     }
 
-    .small-note {
+    .section p,
+    .section li,
+    .section label {
       color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .sections {
-      display: grid;
-      gap: 20px;
-      padding: 8px 0 72px;
-    }
-
-    .section {
-      scroll-margin-top: 92px;
+      line-height: 1.65;
     }
 
     .grid-2 {
@@ -254,15 +230,7 @@
       padding: 18px;
       border-radius: 18px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.035);
-    }
-
-    .panel p,
-    .section p,
-    .section li,
-    .section label {
-      color: var(--muted);
-      line-height: 1.65;
+      background: var(--panel-soft);
     }
 
     .list-clean {
@@ -270,43 +238,9 @@
       margin: 10px 0 0;
     }
 
-    .stakeholder-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    .stakeholder-tab {
-      min-height: 44px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    .stakeholder-tab.active {
-      background: linear-gradient(135deg, rgba(50,197,255,0.22), rgba(94,255,200,0.18));
-      border-color: rgba(94,255,200,0.35);
-    }
-
-    .stakeholder-pane { display: none; }
-    .stakeholder-pane.active { display: block; }
-
-    .pathway {
+    .route-card {
       display: grid;
       gap: 12px;
-      margin-top: 14px;
-    }
-
-    .pathway-step {
-      padding: 16px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
     }
 
     form {
@@ -338,8 +272,8 @@
     }
 
     input:focus, select:focus, textarea:focus {
-      border-color: rgba(94,255,200,0.42);
-      box-shadow: 0 0 0 3px rgba(94,255,200,0.12);
+      border-color: rgba(98,255,208,0.42);
+      box-shadow: 0 0 0 3px rgba(98,255,208,0.12);
     }
 
     textarea { min-height: 120px; resize: vertical; }
@@ -388,27 +322,11 @@
       color: var(--muted);
     }
 
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .pill {
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
     @media (max-width: 980px) {
-      .hero-grid,
       .grid-2,
       .grid-3,
-      .form-grid {
+      .form-grid,
+      .metrics {
         grid-template-columns: 1fr;
       }
     }
@@ -418,13 +336,9 @@
         align-items: flex-start;
         flex-direction: column;
       }
-      .hero-main,
-      .hero-side,
+      .hero-card,
       .section {
         padding: 22px;
-      }
-      .metrics {
-        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -432,18 +346,14 @@
 <body>
   <header class="topbar">
     <div class="container nav">
-      <div class="brand-wrap">
-        <div class="brand">DSGE, LLC</div>
-        <div class="brand-sub">Circular operations • workforce pathways • visible impact</div>
-      </div>
+      <div class="brand">DSGE, LLC</div>
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#about">About Us</a>
         <a href="#mission">Mission</a>
         <a href="#vision">Vision</a>
         <a href="#values">Values</a>
-        <a href="#stakeholders">Stakeholders</a>
-        <a href="#deployment-plan">Request Deployment Plan</a>
-        <a href="#intake">Intake</a>
+        <a href="#routes">Who This Helps</a>
+        <a href="#deployment-plan">Deployment Plan</a>
         <a href="#contact">Contact</a>
         <button class="solid" type="button" onclick="startFlow()">Start</button>
       </nav>
@@ -452,112 +362,72 @@
 
   <main>
     <section class="hero">
-      <div class="container hero-grid">
-        <div class="card hero-main">
-          <div class="eyebrow">Built for partners, operators, universities, workforce and community stakeholders</div>
-          <h1>DSGE converts mission into an actionable stakeholder pathway.</h1>
+      <div class="container">
+        <div class="hero-card">
+          <div class="eyebrow">Clear stakeholder entry • simple flow • real next steps</div>
+          <h1>DSGE helps stakeholders move from interest to action.</h1>
           <p class="lead">
-            This V2 page is designed for conversion. It gives visitors a clear entry point, shows who DSGE serves, explains the mission and vision, and captures stakeholder interest in a usable format.
+            This version keeps the cleaner V1 feel while making every major button do something useful. Visitors can quickly understand DSGE, see where they fit, request a deployment discussion, and submit their information for follow-up.
           </p>
           <div class="hero-actions">
             <button class="btn primary" type="button" onclick="startFlow()">Start</button>
-            <button class="btn" type="button" onclick="goToSection('stakeholders')">Stakeholders</button>
-            <button class="btn" type="button" onclick="goToSection('deployment-plan')">Request Deployment Plan</button>
-            <button class="btn" type="button" onclick="goToSection('about')">About Us</button>
-            <button class="btn" type="button" onclick="goToSection('contact')">Contact</button>
-            <button class="btn" type="button" onclick="goToSection('intake')">Intake</button>
+            <button class="btn" type="button" onclick="goToSection('routes')">See How This Helps You</button>
+            <button class="btn" type="button" onclick="requestDeploymentPlan()">Get Deployment Plan</button>
           </div>
           <div class="metrics">
             <div class="metric">
-              <strong>1 page</strong>
-              <span>Simple stakeholder-first flow with visible mission, vision, contact, and engagement capture.</span>
+              <strong>Simple flow</strong>
+              <span>Hero to explanation to action, without vague buttons or overloaded choices.</span>
             </div>
             <div class="metric">
-              <strong>3 pathways</strong>
-              <span>Partner, operator, and training/research views with tailored messaging.</span>
+              <strong>Real outcomes</strong>
+              <span>Each major click either explains value, opens contact, or prepares the intake form.</span>
             </div>
             <div class="metric">
-              <strong>Instant action</strong>
-              <span>Clickable phone, email, map address, and a working intake form with export-ready capture.</span>
+              <strong>Stakeholder-ready</strong>
+              <span>Mission, vision, values, address, phone, and email are visible and easy to use.</span>
             </div>
           </div>
         </div>
-
-        <aside class="card hero-side">
-          <h3>Quick stakeholder routing</h3>
-          <p class="small-note">Choose the lane that best fits the visitor. The page will jump them to the right section and prefill the intake form.</p>
-          <div class="inline-actions">
-            <button class="btn" type="button" onclick="chooseStakeholder('partner')">I am a Partner</button>
-            <button class="btn" type="button" onclick="goToSection('about')">About Us</button>
-            <button class="btn" type="button" onclick="goToSection('mission')">Mission</button>
-            <button class="btn" type="button" onclick="goToSection('vision')">Vision</button>
-            <button class="btn" type="button" onclick="goToSection('values')">Values</button>
-            <button class="btn" type="button" onclick="goToSection('contact')">Contact</button>
-            <button class="btn" type="button" onclick="chooseStakeholder('operator')">I am an Operator</button>
-            <button class="btn" type="button" onclick="chooseStakeholder('training')">I need Training / R&amp;D</button>
-          </div>
-          <div class="status-box" id="routingStatus">No stakeholder selected yet.</div>
-          <div class="inline-actions">
-            <button class="btn" type="button" onclick="goToSection('stakeholders')">Open Stakeholder Section</button>
-            <button class="btn" type="button" onclick="goToSection('deployment-plan')">Request Deployment Plan</button>
-            <button class="btn" type="button" onclick="goToSection('intake')">Open Intake</button>
-          </div>
-          <div class="pill-row">
-            <span class="pill">University partnerships</span>
-            <span class="pill">Workforce development</span>
-            <span class="pill">R&amp;D collaboration</span>
-            <span class="pill">Deployment readiness</span>
-          </div>
-        </aside>
       </div>
     </section>
 
     <div class="container sections">
-      <section id="about" class="card section">
+      <section id="about" class="section">
         <h2>About Us</h2>
         <div class="grid-2">
           <div class="panel">
             <p>
-              DSGE, LLC is building a practical operating model that helps organizations see, measure, and act on circularity, workforce development, and local economic value.
-            </p>
-            <p>
-              The goal is not only to inform stakeholders, but to give them a usable path to engage, pilot, partner, train, and scale.
+              DSGE, LLC is building a practical operating model that helps organizations turn circularity, workforce, and deployment challenges into measurable operational and community value.
             </p>
           </div>
           <div class="panel">
-            <h3>Who this page is for</h3>
-            <ul class="list-clean">
-              <li>Industry partners and site hosts</li>
-              <li>Workforce development organizations</li>
-              <li>Universities, vocational schools, and R&amp;D collaborators</li>
-              <li>Public and private stakeholders evaluating deployment readiness</li>
-            </ul>
+            <p>
+              This page is built to help partners, operators, institutions, and supporters understand what DSGE does and what the next step looks like.
+            </p>
           </div>
+        </div>
+        <div class="inline-actions">
+          <button class="btn" type="button" onclick="goToSection('mission')">Read Mission</button>
+          <button class="btn" type="button" onclick="goToSection('routes')">See Who This Helps</button>
         </div>
       </section>
 
-      <section id="mission" class="card section">
+      <section id="mission" class="section">
         <h2>Mission</h2>
         <p>
           To create transparent, practical systems that turn resource, workforce, and sustainability challenges into measurable operational, economic, and community value.
         </p>
       </section>
 
-      <section id="mission" class="card section">
-        <h2>Mission</h2>
-        <p>
-          To create transparent, practical systems that turn resource, workforce, and sustainability challenges into measurable operational, economic, and community value.
-        </p>
-      </section>
-
-      <section id="vision" class="card section">
+      <section id="vision" class="section">
         <h2>Vision</h2>
         <p>
           A future where circular operations, measurable impact, workforce pathways, and cross-sector collaboration are easy to understand, easy to verify, and easy to scale.
         </p>
       </section>
 
-      <section id="values" class="card section">
+      <section id="values" class="section">
         <h2>Values</h2>
         <div class="grid-3">
           <div class="panel">
@@ -570,101 +440,59 @@
           </div>
           <div class="panel">
             <h3>Shared Value</h3>
-            <p>Build models where partners, operators, communities, and learners can all benefit from successful execution.</p>
+            <p>Build models where partners, operators, communities, and learners can benefit from successful execution.</p>
           </div>
         </div>
       </section>
 
-      <section id="stakeholders" class="card section">
-        <h2>Stakeholder Pathways</h2>
-        <p>Select a stakeholder type to see the most relevant value proposition and next steps.</p>
-
-        <div class="stakeholder-tabs">
-          <button class="stakeholder-tab active" type="button" data-target="partner" onclick="showStakeholder('partner')">Partners</button>
-          <button class="stakeholder-tab" type="button" data-target="operator" onclick="showStakeholder('operator')">Operators</button>
-          <button class="stakeholder-tab" type="button" data-target="training" onclick="showStakeholder('training')">Training / R&amp;D</button>
-        </div>
-
-        <div id="partner" class="stakeholder-pane active panel">
-          <h3>For Partners</h3>
-          <p>See how DSGE supports deployment, compliance alignment, visibility, and shared-value outcomes without making the stakeholder decode a complex system alone.</p>
-          <div class="pathway">
-            <div class="pathway-step"><strong>Step 1:</strong> Identify site, material, workforce, or reporting need.</div>
-            <div class="pathway-step"><strong>Step 2:</strong> Review stakeholder fit, deployment requirements, and potential pilot scope.</div>
-            <div class="pathway-step"><strong>Step 3:</strong> Submit interest for follow-up, pilot planning, or partnership discussion.</div>
-          </div>
-        </div>
-
-        <div id="operator" class="stakeholder-pane panel">
-          <h3>For Operators</h3>
-          <p>Understand the work breakdown, staffing expectations, training needs, and what operational readiness looks like on the ground.</p>
-          <div class="pathway">
-            <div class="pathway-step"><strong>Step 1:</strong> Review role expectations and required capabilities.</div>
-            <div class="pathway-step"><strong>Step 2:</strong> Confirm staffing, safety, workflow, and reporting requirements.</div>
-            <div class="pathway-step"><strong>Step 3:</strong> Request operational briefing or readiness review.</div>
-          </div>
-        </div>
-
-        <div id="training" class="stakeholder-pane panel">
-          <h3>For Training, Research, and University Partners</h3>
-          <p>Explore collaboration around workforce pipelines, research pilots, vocational pathways, curriculum support, and applied innovation.</p>
-          <div class="pathway">
-            <div class="pathway-step"><strong>Step 1:</strong> Align interests around workforce, research, or instructional collaboration.</div>
-            <div class="pathway-step"><strong>Step 2:</strong> Define the pilot, lab, training, or applied-learning opportunity.</div>
-            <div class="pathway-step"><strong>Step 3:</strong> Submit collaboration interest and desired next step.</div>
-          </div>
-        </div>
-      </section>
-
-      <section id="deployment-plan" class="card section">
-        <h2>Request Deployment Plan</h2>
-        <p>Stakeholders can use this section to request a pilot, operator briefing, rollout discussion, or deployment planning review.</p>
+      <section id="routes" class="section">
+        <h2>Who This Helps</h2>
         <div class="grid-3">
+          <div class="panel route-card">
+            <h3>Partners</h3>
+            <p>Organizations exploring pilots, site collaboration, host opportunities, or shared-value deployment.</p>
+            <button class="btn" type="button" onclick="setRoute('Partner', 'Request pilot discussion')">See My Next Step</button>
+          </div>
+          <div class="panel route-card">
+            <h3>Operators</h3>
+            <p>Teams that need clarity on staffing, workflows, readiness, and operational execution requirements.</p>
+            <button class="btn" type="button" onclick="setRoute('Operator', 'Request operator briefing')">See My Next Step</button>
+          </div>
+          <div class="panel route-card">
+            <h3>Training / R&amp;D</h3>
+            <p>Universities, vocational programs, and research partners looking for workforce or applied-learning collaboration.</p>
+            <button class="btn" type="button" onclick="setRoute('Training / R&D', 'Explore training / university partnership')">See My Next Step</button>
+          </div>
+        </div>
+        <div class="status-box" id="routingStatus">Choose a stakeholder group to load the best next step into the intake form.</div>
+      </section>
+
+      <section id="deployment-plan" class="section">
+        <h2>Get a Deployment Plan</h2>
+        <div class="grid-2">
           <div class="panel">
-            <h3>Pilot Request</h3>
-            <p>Route stakeholders to a focused conversation about site readiness, scope, timing, and pilot structure.</p>
-            <div class="inline-actions">
-              <button class="btn" type="button" onclick="prefillDeployment('Request pilot discussion')">Request Pilot Discussion</button>
-            </div>
+            <h3>What this request is for</h3>
+            <ul class="list-clean">
+              <li>Pilot discussion</li>
+              <li>Operator briefing</li>
+              <li>Deployment readiness review</li>
+              <li>University or training collaboration discussion</li>
+            </ul>
           </div>
           <div class="panel">
-            <h3>Operator Briefing</h3>
-            <p>Let operators or implementation teams jump straight into readiness, staffing, and execution needs.</p>
+            <h3>What happens next</h3>
+            <p>The request loads into the intake form so the operator can capture the stakeholder type, organization, contact information, and the requested next step.</p>
             <div class="inline-actions">
-              <button class="btn" type="button" onclick="prefillDeployment('Request operator briefing')">Request Operator Briefing</button>
-            </div>
-          </div>
-          <div class="panel">
-            <h3>Deployment Review</h3>
-            <p>For institutions, partners, and host sites that want a structured deployment plan request and follow-up path.</p>
-            <div class="inline-actions">
-              <button class="btn" type="button" onclick="prefillDeployment('Schedule stakeholder call')">Request Deployment Review</button>
+              <button class="btn primary" type="button" onclick="requestDeploymentPlan()">Open Deployment Request</button>
+              <button class="btn" type="button" onclick="goToSection('contact')">Call or Email DSGE</button>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="pathways" class="card section">
-        <h2>Required Pathways Visible to Stakeholders</h2>
-        <div class="grid-3">
-          <div class="panel">
-            <h3>Mission / Vision</h3>
-            <p>Immediate visibility so stakeholders understand purpose before they are asked to act.</p>
-          </div>
-          <div class="panel">
-            <h3>Careers, not jobs</h3>
-            <p>Pathways emphasize capability-building, advancement, and structured participation rather than one-off roles.</p>
-          </div>
-          <div class="panel">
-            <h3>R&amp;D + education</h3>
-            <p>University, vocational, and innovation partnerships are called out as part of the operating model.</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="intake" class="card section">
-        <h2>Stakeholder Intake</h2>
-        <p>This form is built for conversion mode. It captures interest locally in the browser and can export the submission for operator follow-up.</p>
+      <section id="intake" class="section">
+        <h2>Request Follow-Up</h2>
+        <p>Use this form to request a call, pilot discussion, operator briefing, or collaboration conversation.</p>
 
         <form id="stakeholderForm">
           <div class="form-grid">
@@ -716,22 +544,22 @@
 
           <label>
             What do you need help with?
-            <textarea id="message" name="message" placeholder="Describe interest, challenge, project, site, training need, or partnership goal."></textarea>
+            <textarea id="message" name="message" placeholder="Describe your interest, challenge, project, or requested discussion."></textarea>
           </label>
 
           <div class="inline-actions">
-            <button class="btn primary" type="submit">Save Submission</button>
-            <button class="btn" type="button" onclick="downloadSubmission()">Download Latest Submission</button>
-            <button class="btn warning" type="button" onclick="clearSubmission()">Clear</button>
+            <button class="btn primary" type="submit">Save Request</button>
+            <button class="btn" type="button" onclick="downloadSubmission()">Download Latest Request</button>
+            <button class="btn" type="button" onclick="clearSubmission()">Clear Form</button>
           </div>
         </form>
 
-        <div class="status-box" id="formStatus">No submission saved yet.</div>
+        <div class="status-box" id="formStatus">No request saved yet.</div>
       </section>
 
-      <section id="contact" class="card section">
+      <section id="contact" class="section">
         <h2>Contact</h2>
-        <p>Visible and clickable on desktop and mobile, with all core stakeholder contact details in one place.</p>
+        <p>All stakeholder contact information is visible and usable on desktop and mobile.</p>
         <div class="contact-list">
           <div class="contact-item">
             <span class="contact-label">Email</span>
@@ -749,13 +577,11 @@
           </div>
         </div>
       </section>
-
-      
     </div>
   </main>
 
   <footer class="footer">
-    <div class="container">© DSGE, LLC • V2 Conversion Mode</div>
+    <div class="container">© DSGE, LLC • V2 Simplified Conversion</div>
   </footer>
 
   <script>
@@ -769,50 +595,24 @@
     }
 
     function startFlow() {
-      goToSection('stakeholders');
-      document.getElementById('routingStatus').textContent = 'Start clicked. Choose a stakeholder path, open intake, or request a deployment plan.';
+      goToSection('routes');
+      document.getElementById('routingStatus').textContent = 'Start clicked. Choose the stakeholder group that fits you best, or request a deployment plan.';
     }
 
-    function showStakeholder(key) {
-      document.querySelectorAll('.stakeholder-tab').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.target === key);
-      });
-      document.querySelectorAll('.stakeholder-pane').forEach(pane => {
-        pane.classList.toggle('active', pane.id === key);
-      });
-    }
-
-    function prefillDeployment(step) {
+    function setRoute(type, nextStep) {
+      document.getElementById('stakeholderType').value = type;
+      document.getElementById('nextStep').value = nextStep;
+      document.getElementById('routingStatus').textContent = type + ' selected. Your next step has been loaded into the form below.';
       goToSection('intake');
-      document.getElementById('nextStep').value = step;
-      document.getElementById('routingStatus').textContent = step + ' selected. Intake is ready below.';
     }
 
-    function chooseStakeholder(key) {
-      showStakeholder(key);
-      goToSection('stakeholders');
-
-      const statusMap = {
-        partner: 'Partner selected. Messaging and intake can now be tailored for partnership or pilot discussions.',
-        operator: 'Operator selected. The page is now focused on readiness, staffing, and workflow needs.',
-        training: 'Training / R&D selected. The page is now focused on collaboration, pathways, and applied learning.'
-      };
-
-      const intakeMap = {
-        partner: 'Partner',
-        operator: 'Operator',
-        training: 'Training / R&D'
-      };
-
-      const nextStepMap = {
-        partner: 'Request pilot discussion',
-        operator: 'Request operator briefing',
-        training: 'Explore training / university partnership'
-      };
-
-      document.getElementById('routingStatus').textContent = statusMap[key] || 'Stakeholder selected.';
-      document.getElementById('stakeholderType').value = intakeMap[key] || '';
-      document.getElementById('nextStep').value = nextStepMap[key] || '';
+    function requestDeploymentPlan() {
+      document.getElementById('nextStep').value = 'Schedule stakeholder call';
+      document.getElementById('routingStatus').textContent = 'Deployment plan request selected. Complete the form below so DSGE can follow up.';
+      goToSection('deployment-plan');
+      setTimeout(function () {
+        goToSection('intake');
+      }, 250);
     }
 
     document.getElementById('stakeholderForm').addEventListener('submit', function (event) {
@@ -831,19 +631,18 @@
 
       latestSubmission = data;
       localStorage.setItem('dsgeStakeholderSubmission', JSON.stringify(data));
-
-      document.getElementById('formStatus').textContent = 'Submission saved locally in this browser. Use Download Latest Submission to export it for follow-up.';
+      document.getElementById('formStatus').textContent = 'Request saved locally in this browser. Use Download Latest Request to export it.';
     });
 
     function downloadSubmission() {
       const stored = latestSubmission || JSON.parse(localStorage.getItem('dsgeStakeholderSubmission') || 'null');
       if (!stored) {
-        document.getElementById('formStatus').textContent = 'No saved submission found to download yet.';
+        document.getElementById('formStatus').textContent = 'No saved request found yet.';
         return;
       }
 
       const lines = [
-        'DSGE Stakeholder Intake',
+        'DSGE Stakeholder Request',
         'Saved At: ' + stored.savedAt,
         'Stakeholder Type: ' + stored.stakeholderType,
         'Organization Name: ' + stored.organizationName,
@@ -859,29 +658,27 @@
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'dsge-stakeholder-intake.txt';
+      link.download = 'dsge-stakeholder-request.txt';
       document.body.appendChild(link);
       link.click();
       link.remove();
       URL.revokeObjectURL(url);
-
-      document.getElementById('formStatus').textContent = 'Latest submission downloaded.';
+      document.getElementById('formStatus').textContent = 'Latest request downloaded.';
     }
 
     function clearSubmission() {
       localStorage.removeItem('dsgeStakeholderSubmission');
       latestSubmission = null;
       document.getElementById('stakeholderForm').reset();
-      document.getElementById('formStatus').textContent = 'Saved submission cleared.';
-      document.getElementById('routingStatus').textContent = 'No stakeholder selected yet.';
-      showStakeholder('partner');
+      document.getElementById('formStatus').textContent = 'Saved request cleared.';
+      document.getElementById('routingStatus').textContent = 'Choose a stakeholder group to load the best next step into the intake form.';
     }
 
     window.addEventListener('DOMContentLoaded', function () {
       const stored = JSON.parse(localStorage.getItem('dsgeStakeholderSubmission') || 'null');
       if (stored) {
         latestSubmission = stored;
-        document.getElementById('formStatus').textContent = 'A previous submission was found in local browser storage and is ready to download or replace.';
+        document.getElementById('formStatus').textContent = 'A previous request was found in local browser storage and is ready to download or replace.';
       }
     });
   </script>
