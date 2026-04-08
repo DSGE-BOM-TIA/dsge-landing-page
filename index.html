@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DSGE V2 Simplified Conversion</title>
+  <title>DSGE V3 Live Submission Landing Page</title>
   <style>
     :root {
       --bg-top: #07101d;
@@ -15,6 +15,8 @@
       --muted: #b8c6da;
       --accent: #33c6ff;
       --accent-2: #62ffd0;
+      --danger: #ff8e8e;
+      --ok: #9ff2c8;
       --shadow: 0 18px 48px rgba(0,0,0,0.28);
       --radius: 24px;
     }
@@ -287,6 +289,18 @@
       color: var(--muted);
     }
 
+    .status-box.ok {
+      color: var(--ok);
+      border-color: rgba(159,242,200,0.35);
+      background: rgba(159,242,200,0.08);
+    }
+
+    .status-box.error {
+      color: var(--danger);
+      border-color: rgba(255,142,142,0.35);
+      background: rgba(255,142,142,0.08);
+    }
+
     .contact-list {
       display: grid;
       gap: 12px;
@@ -322,6 +336,14 @@
       color: var(--muted);
     }
 
+    code.inline {
+      padding: 2px 6px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text);
+    }
+
     @media (max-width: 980px) {
       .grid-2,
       .grid-3,
@@ -342,6 +364,7 @@
       }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -364,10 +387,10 @@
     <section class="hero">
       <div class="container">
         <div class="hero-card">
-          <div class="eyebrow">Clear stakeholder entry • simple flow • real next steps</div>
+          <div class="eyebrow">V1-style layout • live submission ready • clear stakeholder paths</div>
           <h1>DSGE helps stakeholders move from interest to action.</h1>
           <p class="lead">
-            This version keeps the cleaner V1 feel while making every major button do something useful. Visitors can quickly understand DSGE, see where they fit, request a deployment discussion, and submit their information for follow-up.
+            This V3 version keeps the cleaner first-version look and replaces local-only form handling with live email submission support through EmailJS.
           </p>
           <div class="hero-actions">
             <button class="btn primary" type="button" onclick="startFlow()">Start</button>
@@ -377,15 +400,15 @@
           <div class="metrics">
             <div class="metric">
               <strong>Simple flow</strong>
-              <span>Hero to explanation to action, without vague buttons or overloaded choices.</span>
+              <span>Hero to explanation to action, without vague buttons or dead-end clicks.</span>
             </div>
             <div class="metric">
-              <strong>Real outcomes</strong>
-              <span>Each major click either explains value, opens contact, or prepares the intake form.</span>
+              <strong>Live email path</strong>
+              <span>Requests can be emailed directly instead of only being stored in the browser.</span>
             </div>
             <div class="metric">
               <strong>Stakeholder-ready</strong>
-              <span>Mission, vision, values, address, phone, and email are visible and easy to use.</span>
+              <span>Mission, vision, values, address, phone, and email stay visible and usable.</span>
             </div>
           </div>
         </div>
@@ -464,7 +487,7 @@
             <button class="btn" type="button" onclick="setRoute('Training / R&D', 'Explore training / university partnership')">See My Next Step</button>
           </div>
         </div>
-        <div class="status-box" id="routingStatus">Choose a stakeholder group to load the best next step into the intake form.</div>
+        <div class="status-box" id="routingStatus">Choose a stakeholder group to load the best next step into the request form.</div>
       </section>
 
       <section id="deployment-plan" class="section">
@@ -481,7 +504,7 @@
           </div>
           <div class="panel">
             <h3>What happens next</h3>
-            <p>The request loads into the intake form so the operator can capture the stakeholder type, organization, contact information, and the requested next step.</p>
+            <p>The request loads into the form so the stakeholder can send DSGE a focused request with the right next step already selected.</p>
             <div class="inline-actions">
               <button class="btn primary" type="button" onclick="requestDeploymentPlan()">Open Deployment Request</button>
               <button class="btn" type="button" onclick="goToSection('contact')">Call or Email DSGE</button>
@@ -493,6 +516,16 @@
       <section id="intake" class="section">
         <h2>Request Follow-Up</h2>
         <p>Use this form to request a call, pilot discussion, operator briefing, or collaboration conversation.</p>
+
+        <div class="panel">
+          <h3>EmailJS setup required</h3>
+          <p>
+            Before live email sending works, replace these placeholders in the script below with your EmailJS credentials:
+            <code class="inline">YOUR_PUBLIC_KEY</code>,
+            <code class="inline">YOUR_SERVICE_ID</code>, and
+            <code class="inline">YOUR_TEMPLATE_ID</code>.
+          </p>
+        </div>
 
         <form id="stakeholderForm">
           <div class="form-grid">
@@ -548,13 +581,13 @@
           </label>
 
           <div class="inline-actions">
-            <button class="btn primary" type="submit">Save Request</button>
-            <button class="btn" type="button" onclick="downloadSubmission()">Download Latest Request</button>
+            <button class="btn primary" id="submitButton" type="submit">Send Request</button>
+            <button class="btn" type="button" onclick="downloadSubmission()">Download Copy</button>
             <button class="btn" type="button" onclick="clearSubmission()">Clear Form</button>
           </div>
         </form>
 
-        <div class="status-box" id="formStatus">No request saved yet.</div>
+        <div class="status-box" id="formStatus">No request sent yet.</div>
       </section>
 
       <section id="contact" class="section">
@@ -581,10 +614,13 @@
   </main>
 
   <footer class="footer">
-    <div class="container">© DSGE, LLC • V2 Simplified Conversion</div>
+    <div class="container">© DSGE, LLC • V3 Live Submission</div>
   </footer>
 
   <script>
+    const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+    const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
+    const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
     let latestSubmission = null;
 
     function goToSection(id) {
@@ -592,6 +628,13 @@
       if (section) {
         section.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
+    }
+
+    function setStatus(message, mode = '') {
+      const box = document.getElementById('formStatus');
+      box.textContent = message;
+      box.classList.remove('ok', 'error');
+      if (mode) box.classList.add(mode);
     }
 
     function startFlow() {
@@ -609,16 +652,11 @@
     function requestDeploymentPlan() {
       document.getElementById('nextStep').value = 'Schedule stakeholder call';
       document.getElementById('routingStatus').textContent = 'Deployment plan request selected. Complete the form below so DSGE can follow up.';
-      goToSection('deployment-plan');
-      setTimeout(function () {
-        goToSection('intake');
-      }, 250);
+      goToSection('intake');
     }
 
-    document.getElementById('stakeholderForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-
-      const data = {
+    function getSubmissionData() {
+      return {
         stakeholderType: document.getElementById('stakeholderType').value,
         organizationName: document.getElementById('organizationName').value,
         contactName: document.getElementById('contactName').value,
@@ -628,19 +666,10 @@
         message: document.getElementById('message').value,
         savedAt: new Date().toISOString()
       };
-
-      latestSubmission = data;
-      localStorage.setItem('dsgeStakeholderSubmission', JSON.stringify(data));
-      document.getElementById('formStatus').textContent = 'Request saved locally in this browser. Use Download Latest Request to export it.';
-    });
+    }
 
     function downloadSubmission() {
-      const stored = latestSubmission || JSON.parse(localStorage.getItem('dsgeStakeholderSubmission') || 'null');
-      if (!stored) {
-        document.getElementById('formStatus').textContent = 'No saved request found yet.';
-        return;
-      }
-
+      const stored = latestSubmission || getSubmissionData();
       const lines = [
         'DSGE Stakeholder Request',
         'Saved At: ' + stored.savedAt,
@@ -663,22 +692,67 @@
       link.click();
       link.remove();
       URL.revokeObjectURL(url);
-      document.getElementById('formStatus').textContent = 'Latest request downloaded.';
+      setStatus('A copy of the current request was downloaded.');
     }
 
     function clearSubmission() {
-      localStorage.removeItem('dsgeStakeholderSubmission');
       latestSubmission = null;
       document.getElementById('stakeholderForm').reset();
-      document.getElementById('formStatus').textContent = 'Saved request cleared.';
-      document.getElementById('routingStatus').textContent = 'Choose a stakeholder group to load the best next step into the intake form.';
+      setStatus('Form cleared.');
+      document.getElementById('routingStatus').textContent = 'Choose a stakeholder group to load the best next step into the request form.';
     }
 
-    window.addEventListener('DOMContentLoaded', function () {
-      const stored = JSON.parse(localStorage.getItem('dsgeStakeholderSubmission') || 'null');
-      if (stored) {
-        latestSubmission = stored;
-        document.getElementById('formStatus').textContent = 'A previous request was found in local browser storage and is ready to download or replace.';
+    function emailJsConfigured() {
+      return ![
+        EMAILJS_PUBLIC_KEY,
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID
+      ].some(value => value.startsWith('YOUR_'));
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.emailjs && emailJsConfigured()) {
+        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+      }
+    });
+
+    document.getElementById('stakeholderForm').addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      latestSubmission = getSubmissionData();
+      const submitButton = document.getElementById('submitButton');
+
+      if (!emailJsConfigured()) {
+        setStatus('Live email is not configured yet. Add your EmailJS public key, service ID, and template ID in the script, then redeploy.', 'error');
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+      setStatus('Sending request...');
+
+      try {
+        const templateParams = {
+          to_email: 'tia@dsge-info.com',
+          stakeholder_type: latestSubmission.stakeholderType,
+          organization_name: latestSubmission.organizationName,
+          contact_name: latestSubmission.contactName,
+          contact_email: latestSubmission.contactEmail,
+          contact_phone: latestSubmission.contactPhone,
+          requested_next_step: latestSubmission.nextStep,
+          message: latestSubmission.message || 'No message provided.',
+          submitted_at: latestSubmission.savedAt
+        };
+
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+        setStatus('Request sent successfully to DSGE by email.', 'ok');
+        document.getElementById('routingStatus').textContent = 'Request sent. DSGE can now follow up using the submitted information.';
+      } catch (error) {
+        console.error(error);
+        setStatus('Email sending failed. Check your EmailJS setup and template field names, then try again.', 'error');
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send Request';
       }
     });
   </script>
