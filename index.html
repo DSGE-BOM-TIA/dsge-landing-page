@@ -1,1 +1,654 @@
-1
+import React, { useMemo, useState } from "react";
+import {
+  ArrowRight,
+  BarChart3,
+  CheckCircle2,
+  Copy,
+  Factory,
+  Leaf,
+  Link as LinkIcon,
+  Mail,
+  MapPinned,
+  Phone,
+  Recycle,
+  ShieldCheck,
+  Target,
+  TimerReset,
+  Truck,
+  Upload,
+  Users,
+  Values,
+  Zap,
+  Building2,
+} from "lucide-react";
+
+type FormState = {
+  name: string;
+  organization: string;
+  email: string;
+  interest: string;
+};
+
+const stats = [
+  {
+    label: "Pilot cities",
+    value: "6+",
+    note: "Detroit, Lansing, DeWitt, Grand Ledge, Okemos, East Lansing",
+  },
+  {
+    label: "Deployment mode",
+    value: "Rapid",
+    note: "Built for low-notice diversion events and scheduled pickups",
+  },
+  {
+    label: "Primary material focus",
+    value: "PP",
+    note: "Polypropylene-first market entry with scalable expansion path",
+  },
+  {
+    label: "Reporting outcome",
+    value: "Live ESG",
+    note: "Traceability, chain of custody, and impact visibility",
+  },
+];
+
+const featureCards = [
+  {
+    icon: Recycle,
+    title: "Diversion as infrastructure",
+    body: "Turn recyclable materials into measurable, trackable value instead of unmanaged waste and missed reporting opportunities.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Compliance-ready workflow",
+    body: "Support ISO-aligned operating discipline, documented chain of custody, and cleaner partner reporting from day one.",
+  },
+  {
+    icon: BarChart3,
+    title: "Operator + executive visibility",
+    body: "Give operators simple task flow while leadership sees volume, response time, partner status, and impact metrics.",
+  },
+  {
+    icon: TimerReset,
+    title: "Rapid deployment mode",
+    body: "Stand up a collection and response workflow fast for no-notice events, overflow material, or pilot activation.",
+  },
+];
+
+const partnerTypes = [
+  "Manufacturing",
+  "Automotive",
+  "Municipal",
+  "Universities",
+  "Material Recovery",
+  "Logistics",
+  "ESG / Compliance",
+  "Grant / Community",
+];
+
+const comparison = [
+  {
+    label: "Traditional disposal",
+    items: [
+      "Low visibility after pickup",
+      "Limited community impact story",
+      "Cost center mindset",
+      "Minimal chain-of-custody intelligence",
+    ],
+  },
+  {
+    label: "DSGE partner model",
+    items: [
+      "Material traceability and partner accountability",
+      "Shared ESG and circularity narrative",
+      "Pilot-to-scale operating model",
+      "Rapid-response deployment capability",
+    ],
+  },
+];
+
+const steps = [
+  {
+    title: "1. Identify material opportunity",
+    text: "Map where PP or adjacent streams are being generated, lost, stockpiled, or under-reported.",
+  },
+  {
+    title: "2. Activate pilot workflow",
+    text: "Deploy collection, handling, tagging, routing, and partner coordination with a simple operating picture.",
+  },
+  {
+    title: "3. Measure and report",
+    text: "Track tons, pickups, cycle time, participation, and impact metrics in a format leadership can act on.",
+  },
+  {
+    title: "4. Expand by cluster",
+    text: "Roll successful playbooks across nearby facilities, cities, and partner ecosystems without rebuilding from scratch.",
+  },
+];
+
+const values = [
+  {
+    title: "Integrity",
+    text: "Operate with transparent reporting, responsible stewardship, and traceable decision-making.",
+  },
+  {
+    title: "Readiness",
+    text: "Stay deployment-ready for scheduled work, overflow events, and emerging diversion opportunities.",
+  },
+  {
+    title: "Partnership",
+    text: "Build shared value for industry, community, education, and public-sector stakeholders.",
+  },
+  {
+    title: "Innovation",
+    text: "Use practical systems, data visibility, and disciplined experimentation to improve outcomes.",
+  },
+];
+
+function SectionTitle({
+  eyebrow,
+  title,
+  subtitle,
+}: {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+}) {
+  return (
+    <div className="max-w-3xl">
+      <div className="mb-3 inline-flex rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.24em] text-emerald-300">
+        {eyebrow}
+      </div>
+      <h2 className="text-3xl font-semibold tracking-tight text-white md:text-5xl">{title}</h2>
+      <p className="mt-4 text-sm leading-7 text-slate-300 md:text-base">{subtitle}</p>
+    </div>
+  );
+}
+
+function InfoCard({
+  title,
+  body,
+  icon: Icon,
+}: {
+  title: string;
+  body: string;
+  icon: React.ComponentType<{ className?: string }>;
+}) {
+  return (
+    <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/10">
+      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-300/10 ring-1 ring-emerald-300/15">
+        <Icon className="h-5 w-5 text-emerald-300" />
+      </div>
+      <h3 className="mt-5 text-lg font-semibold text-white">{title}</h3>
+      <p className="mt-3 text-sm leading-7 text-slate-400">{body}</p>
+    </div>
+  );
+}
+
+export default function DSGELandingPage() {
+  const [form, setForm] = useState<FormState>({
+    name: "",
+    organization: "",
+    email: "",
+    interest: "Rapid deployment pilot",
+  });
+  const [copyState, setCopyState] = useState("Copy email");
+
+  const publicEmail = "tia@dsge-info.com";
+  const publicPhones = ["734.884.5925", "517.282.8301"];
+  const publicAddress = "4860 Washtenaw Ave, Suite I, Ann Arbor, MI 48108";
+
+  const mailtoHref = useMemo(() => {
+    const subject = encodeURIComponent(`DSGE inquiry - ${form.interest || "Partnership"}`);
+    const body = encodeURIComponent(
+      `Name: ${form.name || ""}\nOrganization: ${form.organization || ""}\nEmail: ${form.email || ""}\nInterest: ${form.interest || ""}\n\nHow can DSGE help?`
+    );
+    return `mailto:${publicEmail}?subject=${subject}&body=${body}`;
+  }, [form, publicEmail]);
+
+  const scrollToId = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const updateField = (key: keyof FormState, value: string) => {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(publicEmail);
+      setCopyState("Copied");
+      setTimeout(() => setCopyState("Copy email"), 1600);
+    } catch {
+      setCopyState("Copy failed");
+      setTimeout(() => setCopyState("Copy email"), 1600);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,#113127_0%,#09111d_38%,#04070d_100%)] text-slate-100">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/65 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6">
+          <button onClick={() => scrollToId("hero")} className="flex items-center gap-3 text-left" aria-label="Go to top">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-400/15 ring-1 ring-emerald-300/20">
+              <Recycle className="h-5 w-5 text-emerald-300" />
+            </div>
+            <div>
+              <div className="text-sm font-semibold tracking-[0.24em] text-slate-200">DSGE</div>
+              <div className="text-xs text-slate-400">Circular deployment intelligence</div>
+            </div>
+          </button>
+
+          <nav className="hidden items-center gap-6 text-sm text-slate-300 md:flex" aria-label="Primary">
+            <button onClick={() => scrollToId("solution")} className="transition hover:text-white">Solution</button>
+            <button onClick={() => scrollToId("mission")} className="transition hover:text-white">Mission</button>
+            <button onClick={() => scrollToId("vision")} className="transition hover:text-white">Vision</button>
+            <button onClick={() => scrollToId("values")} className="transition hover:text-white">Values</button>
+            <button onClick={() => scrollToId("comparison")} className="transition hover:text-white">Comparison</button>
+            <button onClick={() => scrollToId("deployment")} className="transition hover:text-white">Deployment</button>
+            <button onClick={() => scrollToId("contact")} className="transition hover:text-white">Contact Us</button>
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => scrollToId("mission")}
+              className="hidden rounded-2xl border border-white/10 px-4 py-2 text-sm text-slate-200 transition hover:border-white/20 hover:bg-white/5 md:inline-flex"
+            >
+              Mission / Vision
+            </button>
+            <button
+              onClick={() => scrollToId("contact")}
+              className="inline-flex items-center gap-2 rounded-2xl bg-emerald-400 px-4 py-2 text-sm font-medium text-slate-950 transition hover:translate-y-[-1px]"
+            >
+              Contact us <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section id="hero" className="relative overflow-hidden">
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(16,185,129,0.14),transparent_35%,rgba(59,130,246,0.08)_70%,transparent)]" />
+          <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-20 md:px-6 md:py-28 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+            <div>
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-300/15 bg-emerald-300/10 px-3 py-1 text-xs uppercase tracking-[0.22em] text-emerald-200">
+                <Zap className="h-3.5 w-3.5" /> Mission-ready circular operations
+              </div>
+              <h1 className="max-w-4xl text-4xl font-semibold leading-tight tracking-tight text-white md:text-6xl">
+                The public-facing landing page for rapid material diversion, traceable operations, and visible ESG value.
+              </h1>
+              <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
+                DSGE helps partners move from fragmented recycling activity to a coordinated operating model with measurable reporting,
+                stronger chain of custody, and a faster path from pilot to scalable regional deployment.
+              </p>
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <button
+                  onClick={() => scrollToId("mission")}
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-400 px-5 py-3 text-sm font-medium text-slate-950 transition hover:translate-y-[-1px]"
+                >
+                  View mission <ArrowRight className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => scrollToId("deployment")}
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-slate-100 transition hover:border-white/20 hover:bg-white/10"
+                >
+                  See deployment capability <ArrowRight className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => scrollToId("contact")}
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-slate-100 transition hover:border-white/20 hover:bg-white/10"
+                >
+                  Contact us <ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
+
+              <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                {stats.map((item) => (
+                  <div key={item.label} className="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-2xl shadow-black/10 backdrop-blur-sm">
+                    <div className="text-2xl font-semibold text-white">{item.value}</div>
+                    <div className="mt-1 text-sm font-medium text-slate-200">{item.label}</div>
+                    <div className="mt-2 text-xs leading-6 text-slate-400">{item.note}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-[0_20px_80px_-20px_rgba(0,0,0,0.65)] backdrop-blur-xl">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="rounded-3xl border border-white/10 bg-slate-950/50 p-5">
+                    <div className="flex items-center gap-3 text-sm font-medium text-slate-200">
+                      <Truck className="h-4 w-4 text-emerald-300" /> Rapid deployment
+                    </div>
+                    <p className="mt-3 text-sm leading-7 text-slate-400">
+                      Activate collection, pickup, staging, and reporting for low-notice or planned material events.
+                    </p>
+                  </div>
+                  <div className="rounded-3xl border border-white/10 bg-slate-950/50 p-5">
+                    <div className="flex items-center gap-3 text-sm font-medium text-slate-200">
+                      <LinkIcon className="h-4 w-4 text-emerald-300" /> Chain of custody
+                    </div>
+                    <p className="mt-3 text-sm leading-7 text-slate-400">
+                      Support traceable handling steps from origin through movement, aggregation, and downstream use.
+                    </p>
+                  </div>
+                  <div className="rounded-3xl border border-white/10 bg-slate-950/50 p-5">
+                    <div className="flex items-center gap-3 text-sm font-medium text-slate-200">
+                      <Leaf className="h-4 w-4 text-emerald-300" /> ESG narrative
+                    </div>
+                    <p className="mt-3 text-sm leading-7 text-slate-400">
+                      Translate operational work into a simple story partners can communicate in under 60 seconds.
+                    </p>
+                  </div>
+                  <div className="rounded-3xl border border-white/10 bg-slate-950/50 p-5">
+                    <div className="flex items-center gap-3 text-sm font-medium text-slate-200">
+                      <Factory className="h-4 w-4 text-emerald-300" /> Scalable by cluster
+                    </div>
+                    <p className="mt-3 text-sm leading-7 text-slate-400">
+                      Expand proven workflows city by city and partner by partner instead of rebuilding the system each time.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-4 rounded-3xl border border-emerald-300/15 bg-emerald-300/10 p-5">
+                  <div className="text-xs uppercase tracking-[0.24em] text-emerald-200">60-second value block</div>
+                  <p className="mt-3 text-sm leading-7 text-emerald-50">
+                    DSGE gives organizations a faster way to divert material, show what happened to it, measure impact, and build a shared compliance and community story without standing up the entire infrastructure alone.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-y border-white/10 bg-black/20 py-5">
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-3 px-4 md:px-6">
+            {partnerTypes.map((type) => (
+              <div key={type} className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.18em] text-slate-300">
+                {type}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="solution" className="mx-auto max-w-7xl px-4 py-20 md:px-6">
+          <SectionTitle
+            eyebrow="Solution"
+            title="A cleaner way to explain what DSGE does"
+            subtitle="This page is built to help prospects understand the mission quickly: where the material starts, how the pilot activates, what gets measured, and why the partner relationship creates more value than a normal disposal-only model."
+          />
+
+          <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            {featureCards.map((card) => (
+              <InfoCard key={card.title} title={card.title} body={card.body} icon={card.icon} />
+            ))}
+          </div>
+        </section>
+
+        <section id="mission" className="bg-white/[0.03] py-20">
+          <div className="mx-auto max-w-7xl px-4 md:px-6">
+            <SectionTitle
+              eyebrow="Mission"
+              title="Build circular deployment systems that turn overlooked material into visible value"
+              subtitle="DSGE exists to help partners divert material with discipline, strengthen local economic participation, and create measurable operational and ESG outcomes through practical deployment-ready systems."
+            />
+            <div className="mt-10 grid gap-5 md:grid-cols-3">
+              <InfoCard
+                icon={Target}
+                title="Operational mission"
+                body="Deploy practical collection, routing, aggregation, and reporting systems that work in real conditions."
+              />
+              <InfoCard
+                icon={Users}
+                title="Community mission"
+                body="Connect industry, workforce, education, and public-sector partners into a shared value ecosystem."
+              />
+              <InfoCard
+                icon={BarChart3}
+                title="Impact mission"
+                body="Convert diversion work into measurable performance, traceability, and decision-ready visibility."
+              />
+            </div>
+          </div>
+        </section>
+
+        <section id="vision" className="mx-auto max-w-7xl px-4 py-20 md:px-6">
+          <SectionTitle
+            eyebrow="Vision"
+            title="A regional model that scales from pilot to resilient circular infrastructure"
+            subtitle="DSGE is building toward a future where organizations do not have to choose between speed, accountability, community benefit, and operational excellence. The vision is a replicable platform that clusters partners, materials, reporting, and deployment readiness into one visible operating backbone."
+          />
+          <div className="mt-10 rounded-[2rem] border border-white/10 bg-slate-950/50 p-6 md:p-8">
+            <div className="grid gap-5 md:grid-cols-3">
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
+                <Building2 className="h-5 w-5 text-emerald-300" />
+                <h3 className="mt-4 text-lg font-semibold text-white">Regional clustering</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-400">Scale city by city through concentrated partner ecosystems instead of fragmented one-off efforts.</p>
+              </div>
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
+                <ShieldCheck className="h-5 w-5 text-emerald-300" />
+                <h3 className="mt-4 text-lg font-semibold text-white">Trusted accountability</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-400">Make traceability, stewardship, and documented performance part of everyday operations.</p>
+              </div>
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
+                <Leaf className="h-5 w-5 text-emerald-300" />
+                <h3 className="mt-4 text-lg font-semibold text-white">Visible shared value</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-400">Create environmental, economic, workforce, and community outcomes that stakeholders can clearly see.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="values" className="bg-white/[0.03] py-20">
+          <div className="mx-auto max-w-7xl px-4 md:px-6">
+            <SectionTitle
+              eyebrow="Values"
+              title="Principles that guide the work"
+              subtitle="These values give the stakeholder-facing buttons a destination and make the landing page feel like an organization instead of a placeholder."
+            />
+            <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+              {values.map((value) => (
+                <div key={value.title} className="rounded-[2rem] border border-white/10 bg-slate-950/50 p-6">
+                  <div className="text-lg font-semibold text-white">{value.title}</div>
+                  <p className="mt-3 text-sm leading-7 text-slate-400">{value.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="comparison" className="py-20">
+          <div className="mx-auto max-w-7xl px-4 md:px-6">
+            <SectionTitle
+              eyebrow="Comparison"
+              title="Why the partner model feels different"
+              subtitle="Use this section to show the before-and-after story for customers who need to understand why DSGE is not just another vendor, hauler, or generic sustainability service."
+            />
+
+            <div className="mt-12 grid gap-6 lg:grid-cols-2">
+              {comparison.map((column) => (
+                <div key={column.label} className="rounded-[2rem] border border-white/10 bg-slate-950/50 p-6">
+                  <div className="text-lg font-semibold text-white">{column.label}</div>
+                  <div className="mt-6 space-y-4">
+                    {column.items.map((item) => (
+                      <div key={item} className="flex gap-3 text-sm leading-7 text-slate-300">
+                        <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-emerald-300" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="deployment" className="mx-auto max-w-7xl px-4 py-20 md:px-6">
+          <SectionTitle
+            eyebrow="Deployment capability"
+            title="Fast path from opportunity to operating rhythm"
+            subtitle="This is the simple flow for public visitors: identify the material stream, activate the pilot, measure the result, and scale what works. Replace the copy later with city-specific or partner-specific detail as the buildout continues."
+          />
+
+          <div className="mt-12 grid gap-5 lg:grid-cols-4">
+            {steps.map((step, index) => (
+              <div key={step.title} className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-300/10 text-lg font-semibold text-emerald-300 ring-1 ring-emerald-300/15">
+                  {index + 1}
+                </div>
+                <h3 className="text-lg font-semibold text-white">{step.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-400">{step.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 grid gap-5 lg:grid-cols-[1fr_0.95fr]">
+            <div className="rounded-[2rem] border border-white/10 bg-slate-950/45 p-6">
+              <div className="flex items-center gap-3 text-lg font-semibold text-white">
+                <MapPinned className="h-5 w-5 text-emerald-300" /> Michigan launch posture
+              </div>
+              <p className="mt-4 text-sm leading-7 text-slate-400">
+                Built for regional pilots that can cluster around nearby generators, logistics routes, processors, employers, schools, and community partners. This section is ready for a future embedded map, city cards, or ArcGIS overlay snapshot.
+              </p>
+            </div>
+            <div className="rounded-[2rem] border border-white/10 bg-slate-950/45 p-6">
+              <div className="flex items-center gap-3 text-lg font-semibold text-white">
+                <Users className="h-5 w-5 text-emerald-300" /> Partner expansion logic
+              </div>
+              <p className="mt-4 text-sm leading-7 text-slate-400">
+                Start with one strong use case, prove service quality, document the workflow, and expand to adjacent facilities and partner categories that benefit from the same operating backbone.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="bg-white/[0.03] py-20">
+          <div className="mx-auto max-w-7xl px-4 md:px-6">
+            <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+              <div>
+                <SectionTitle
+                  eyebrow="Contact us"
+                  title="A working contact section tied to real business details"
+                  subtitle="The form below opens a prefilled email draft, while the direct contact panel gives visitors visible email, phone, and location details without changing the original look and feel."
+                />
+                <div className="mt-8 space-y-4 rounded-[2rem] border border-white/10 bg-slate-950/50 p-6">
+                  <div className="flex items-start gap-3 text-sm text-slate-300">
+                    <Mail className="mt-1 h-4 w-4 text-emerald-300" />
+                    <a href={`mailto:${publicEmail}`} className="hover:text-white">{publicEmail}</a>
+                  </div>
+                  <div className="flex items-start gap-3 text-sm text-slate-300">
+                    <Phone className="mt-1 h-4 w-4 text-emerald-300" />
+                    <div className="flex flex-col gap-1">
+                      {publicPhones.map((phone) => (
+                        <a key={phone} href={`tel:${phone.replace(/\./g, "")}`} className="hover:text-white">
+                          {phone}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 text-sm text-slate-300">
+                    <MapPinned className="mt-1 h-4 w-4 text-emerald-300" />
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(publicAddress)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-white"
+                    >
+                      {publicAddress}
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-slate-300">
+                    <Upload className="h-4 w-4 text-emerald-300" /> Form is ready for CRM or shared inbox connection later
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-[2rem] border border-white/10 bg-slate-950/60 p-6 shadow-2xl shadow-black/20">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div>
+                    <label htmlFor="name" className="mb-2 block text-sm text-slate-300">Name</label>
+                    <input
+                      id="name"
+                      value={form.name}
+                      onChange={(e) => updateField("name", e.target.value)}
+                      className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-emerald-300/35"
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="organization" className="mb-2 block text-sm text-slate-300">Organization</label>
+                    <input
+                      id="organization"
+                      value={form.organization}
+                      onChange={(e) => updateField("organization", e.target.value)}
+                      className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-emerald-300/35"
+                      placeholder="Organization name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="mb-2 block text-sm text-slate-300">Email</label>
+                    <input
+                      id="email"
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => updateField("email", e.target.value)}
+                      className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-emerald-300/35"
+                      placeholder="name@organization.com"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="interest" className="mb-2 block text-sm text-slate-300">Interest</label>
+                    <select
+                      id="interest"
+                      value={form.interest}
+                      onChange={(e) => updateField("interest", e.target.value)}
+                      className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-300/35"
+                    >
+                      <option className="bg-slate-950">Rapid deployment pilot</option>
+                      <option className="bg-slate-950">Manufacturing partnership</option>
+                      <option className="bg-slate-950">Municipal / community collaboration</option>
+                      <option className="bg-slate-950">ESG / reporting support</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                  <a
+                    href={mailtoHref}
+                    className="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-400 px-5 py-3 text-sm font-medium text-slate-950 transition hover:translate-y-[-1px]"
+                  >
+                    Email DSGE <ArrowRight className="h-4 w-4" />
+                  </a>
+                  <button
+                    onClick={copyEmail}
+                    className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:border-white/20 hover:bg-white/10"
+                  >
+                    <Copy className="h-4 w-4" /> {copyState}
+                  </button>
+                </div>
+
+                <p className="mt-4 text-xs leading-6 text-slate-500">
+                  Replace the email subject/body wording, partner logos, metrics, and deployment details with your live business data as the build continues.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-white/10 bg-black/30">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 text-sm text-slate-400 md:flex-row md:items-center md:justify-between md:px-6">
+          <div>© 2026 DSGE. Circular deployment intelligence for real-world operations.</div>
+          <div className="flex items-center gap-4">
+            <button onClick={() => scrollToId("hero")} className="transition hover:text-white">Top</button>
+            <button onClick={() => scrollToId("mission")} className="transition hover:text-white">Mission</button>
+            <button onClick={() => scrollToId("values")} className="transition hover:text-white">Values</button>
+            <button onClick={() => scrollToId("contact")} className="transition hover:text-white">Contact</button>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
