@@ -1,27 +1,93 @@
+<!-- SCROLL SCRIPT -->
+<script>
+  function go(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  }
+</script>
+
+<!-- NAV -->
+<div>
+  <button onclick="go('value')">Value</button>
+  <button onclick="go('capabilities')">Capabilities</button>
+  <button onclick="go('response')">Response</button>
+  <button onclick="go('stakeholders')">Stakeholders</button>
+  <button onclick="go('start')">Start</button>
+  <button onclick="go('start')">Deploy</button>
+</div>
+
+<!-- HERO -->
+<section>
+  <h1>Convert Waste Into Revenue</h1>
+</section>
+
+<!-- VALUE -->
+<section id="value">
+  <h2>Value</h2>
+</section>
+
+<!-- CAPABILITIES -->
+<section id="capabilities">
+  <h2>Capabilities</h2>
+</section>
+
+<!-- RESPONSE -->
+<section id="response">
+  <h2>Response</h2>
+</section>
+
+<!-- STAKEHOLDERS (MISSION / VISION / VALUES) -->
 <section id="stakeholders">
   <h2>Mission · Vision · Values</h2>
 
-  <div className="grid md:grid-cols-3 gap-5 mt-6">
-    
-    <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
-      <h3 className="text-white font-semibold">Mission</h3>
-      <p className="text-slate-400 mt-3">
-        Deploy practical circular systems that convert material into measurable value and operational visibility.
-      </p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px;">
+
+    <div style="border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);border-radius:20px;padding:20px;">
+      <h3>Mission</h3>
+      <p>Deploy practical circular systems that convert material into measurable value.</p>
     </div>
 
-    <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
-      <h3 className="text-white font-semibold">Vision</h3>
-      <p className="text-slate-400 mt-3">
-        A scalable regional system where diversion, workforce, and ESG outcomes operate as one coordinated model.
-      </p>
+    <div style="border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);border-radius:20px;padding:20px;">
+      <h3>Vision</h3>
+      <p>A scalable system where diversion, workforce, and ESG operate as one.</p>
     </div>
 
-    <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
-      <h3 className="text-white font-semibold">Values</h3>
-      <p className="text-slate-400 mt-3">
-        Integrity · Readiness · Partnership · Practical Innovation
-      </p>
+    <div style="border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);border-radius:20px;padding:20px;">
+      <h3>Values</h3>
+      <p>Integrity · Readiness · Partnership · Execution</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- START / CONTACT -->
+<section id="start">
+  <h2>Start / Contact</h2>
+
+  <div style="margin-top:20px;line-height:2;">
+
+    <div>
+      Email:
+      <a href="mailto:tia@dsge-info.com" style="color:#6ee7b7;">
+        tia@dsge-info.com
+      </a>
+    </div>
+
+    <div>
+      Phone:
+      <br>
+      <a href="tel:7348845925" style="color:#6ee7b7;">734.884.5925</a><br>
+      <a href="tel:5172828301" style="color:#6ee7b7;">517.282.8301</a>
+    </div>
+
+    <div>
+      Address:
+      <br>
+      <a href="https://maps.google.com/?q=4860 Washtenaw Ave Suite I Ann Arbor MI 48108"
+         target="_blank"
+         style="color:#6ee7b7;">
+        4860 Washtenaw Ave Suite I, Ann Arbor, MI 48108
+      </a>
     </div>
 
   </div>
