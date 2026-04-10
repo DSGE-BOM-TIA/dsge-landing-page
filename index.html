@@ -1,94 +1,303 @@
-<!-- SCROLL SCRIPT -->
-<script>
-  function go(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  }
-</script>
+export default function DSGEOperatorDemo() {
+  const material = "PP";
+  const purity = 94;
+  const weight = 25;
+  const carbonEligible = true;
+  const route = purity >= 92 ? "Manufacturing" : purity >= 80 ? "Resale / Secondary Market" : "Recycling";
+  const baseValue = purity >= 92 ? 1.85 : purity >= 80 ? 1.1 : 0.42;
+  const carbonValue = carbonEligible ? 0.18 : 0;
+  const totalValue = (baseValue + carbonValue).toFixed(2);
+  const revenue = (Number(totalValue) * weight).toFixed(2);
+  const co2 = 8.7;
+  const compliance = Math.min(100, purity + (carbonEligible ? 5 : 0));
 
-<!-- NAV -->
-<div>
-  <button onclick="go('value')">Value</button>
-  <button onclick="go('capabilities')">Capabilities</button>
-  <button onclick="go('response')">Response</button>
-  <button onclick="go('stakeholders')">Stakeholders</button>
-  <button onclick="go('start')">Start</button>
-  <button onclick="go('start')">Deploy</button>
-</div>
+  const cards = [
+    { label: "Material", value: material },
+    { label: "Purity", value: `${purity}%` },
+    { label: "Weight", value: `${weight} lbs` },
+    { label: "Carbon Eligible", value: carbonEligible ? "Yes" : "No" },
+  ];
 
-<!-- HERO -->
-<section>
-  <h1>Convert Waste Into Revenue</h1>
-</section>
+  const stages = [
+    { name: "Input Stream", detail: "Mixed plastics received" },
+    { name: "OpenCV Detection", detail: "Material identified and contamination flagged" },
+    { name: "Smart Routing", detail: `Best route selected: ${route}` },
+    { name: "Value Output", detail: `Estimated revenue: $${revenue}` },
+  ];
 
-<!-- VALUE -->
-<section id="value">
-  <h2>Value</h2>
-</section>
+  const roles = [
+    {
+      title: "Installation Technician",
+      text: "Sets up cameras, lighting, conveyor controls, and scan points.",
+    },
+    {
+      title: "Vision Systems Operator",
+      text: "Monitors detection accuracy, throughput, and routing confidence.",
+    },
+    {
+      title: "Maintenance Engineer",
+      text: "Calibrates optics, cleans sensors, and tunes sorting performance.",
+    },
+  ];
 
-<!-- CAPABILITIES -->
-<section id="capabilities">
-  <h2>Capabilities</h2>
-</section>
+  const detected = [
+    { id: "A-104", type: "PP", confidence: "98%", action: "Manufacturing" },
+    { id: "B-227", type: "HDPE", confidence: "95%", action: "Resale" },
+    { id: "C-081", type: "Mixed", confidence: "82%", action: "Recycling" },
+    { id: "D-310", type: "PP", confidence: "97%", action: "Manufacturing" },
+  ];
 
-<!-- RESPONSE -->
-<section id="response">
-  <h2>Response</h2>
-</section>
+  return (
+    <div className="min-h-screen bg-slate-950 text-white p-6 md:p-10">
+      <div className="max-w-7xl mx-auto space-y-8">
+        <section className="rounded-3xl border border-emerald-800/40 bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950/30 p-8 shadow-2xl">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="space-y-4">
+              <div className="inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm text-cyan-200">
+                DSGE Operator Demo Preview
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+                Waste → Vision → Routing → Value
+              </h1>
+              <p className="text-slate-300 text-lg leading-relaxed">
+                This mock shows how DSGE can present OpenCV sorting, high-tech workforce roles,
+                smart routing, and monetization in one operator-facing flow.
+              </p>
+              <div className="flex flex-wrap gap-3 pt-2">
+                <button className="rounded-2xl bg-emerald-600 px-5 py-3 font-semibold shadow-lg shadow-emerald-900/30">
+                  Deploy DSGE
+                </button>
+                <button className="rounded-2xl border border-slate-700 px-5 py-3 font-semibold text-slate-200">
+                  View System
+                </button>
+              </div>
+            </div>
 
-<!-- STAKEHOLDERS (MISSION / VISION / VALUES) -->
-<section id="stakeholders">
-  <h2>Mission · Vision · Values</h2>
+            <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-5">
+              <div className="mb-4 flex items-center justify-between">
+                <div>
+                  <div className="text-sm text-slate-400">Live Detection View</div>
+                  <div className="text-lg font-semibold">OpenCV Sorting Window</div>
+                </div>
+                <div className="rounded-full bg-emerald-500/15 px-3 py-1 text-sm text-emerald-300">
+                  Active
+                </div>
+              </div>
+              <div className="relative h-72 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden border border-slate-800">
+                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,rgba(34,197,94,0.5),transparent_55%)]" />
+                <div className="absolute inset-x-0 top-8 h-16 bg-slate-700/70" />
+                <div className="absolute inset-x-0 top-24 h-16 bg-slate-600/60" />
+                <div className="absolute left-10 top-12 rounded-xl border-2 border-cyan-400 px-3 py-2 text-sm bg-slate-950/80">
+                  PP detected · 98%
+                </div>
+                <div className="absolute right-12 top-28 rounded-xl border-2 border-emerald-400 px-3 py-2 text-sm bg-slate-950/80">
+                  Route: Manufacturing
+                </div>
+                <div className="absolute left-1/3 bottom-8 rounded-xl border-2 border-amber-400 px-3 py-2 text-sm bg-slate-950/80">
+                  Contamination: Low
+                </div>
+                <div className="absolute inset-y-0 left-1/2 w-px bg-cyan-400/40" />
+                <div className="absolute inset-x-0 top-1/2 h-px bg-cyan-400/20" />
+              </div>
+            </div>
+          </div>
+        </section>
 
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px;">
+        <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {cards.map((card) => (
+            <div key={card.label} className="rounded-3xl border border-slate-800 bg-slate-900 p-5 shadow-xl">
+              <div className="text-sm text-slate-400">{card.label}</div>
+              <div className="mt-2 text-2xl font-bold">{card.value}</div>
+            </div>
+          ))}
+        </section>
 
-    <div style="border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);border-radius:20px;padding:20px;">
-      <h3>Mission</h3>
-      <p>Deploy practical circular systems that convert material into measurable value.</p>
+        <section className="grid lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 rounded-3xl border border-slate-800 bg-slate-900 p-6">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <h2 className="text-2xl font-bold">System Flow</h2>
+                <p className="text-slate-400">Operator-facing sequence from intake to value output</p>
+              </div>
+              <div className="rounded-full bg-cyan-500/10 px-3 py-1 text-sm text-cyan-300">Frame 2–4 Preview</div>
+            </div>
+            <div className="grid md:grid-cols-4 gap-4">
+              {stages.map((stage, index) => (
+                <div key={stage.name} className="relative rounded-2xl border border-slate-800 bg-slate-950 p-4 min-h-36">
+                  <div className="text-xs uppercase tracking-[0.2em] text-cyan-300">Step {index + 1}</div>
+                  <div className="mt-2 text-lg font-semibold">{stage.name}</div>
+                  <div className="mt-2 text-sm text-slate-400 leading-relaxed">{stage.detail}</div>
+                  {index < stages.length - 1 && (
+                    <div className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 text-cyan-400 text-2xl">→</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6">
+            <h2 className="text-2xl font-bold">Value Output</h2>
+            <div className="mt-5 space-y-4">
+              <div className="rounded-2xl bg-slate-950 p-4 border border-slate-800">
+                <div className="text-sm text-slate-400">Selected Route</div>
+                <div className="text-2xl font-bold mt-1">{route}</div>
+              </div>
+              <div className="rounded-2xl bg-slate-950 p-4 border border-slate-800">
+                <div className="text-sm text-slate-400">Value per lb</div>
+                <div className="text-2xl font-bold mt-1">${totalValue}</div>
+              </div>
+              <div className="rounded-2xl bg-slate-950 p-4 border border-slate-800">
+                <div className="text-sm text-slate-400">Estimated Revenue</div>
+                <div className="text-2xl font-bold mt-1">${revenue}</div>
+              </div>
+              <div className="rounded-2xl bg-slate-950 p-4 border border-slate-800">
+                <div className="text-sm text-slate-400">CO₂ Reduced</div>
+                <div className="text-2xl font-bold mt-1">{co2} kg</div>
+              </div>
+              <div className="rounded-2xl bg-slate-950 p-4 border border-slate-800">
+                <div className="text-sm text-slate-400">Compliance Score</div>
+                <div className="text-2xl font-bold mt-1">{compliance}/100</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="grid lg:grid-cols-2 gap-6">
+          <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <h2 className="text-2xl font-bold">Detected Material Queue</h2>
+                <p className="text-slate-400">Illustrative operator table for sorted items</p>
+              </div>
+              <div className="text-sm text-emerald-300">Updated 2.3s ago</div>
+            </div>
+            <div className="overflow-hidden rounded-2xl border border-slate-800">
+              <table className="w-full text-left">
+                <thead className="bg-slate-950 text-slate-300 text-sm">
+                  <tr>
+                    <th className="px-4 py-3">ID</th>
+                    <th className="px-4 py-3">Type</th>
+                    <th className="px-4 py-3">Confidence</th>
+                    <th className="px-4 py-3">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {detected.map((item) => (
+                    <tr key={item.id} className="border-t border-slate-800 bg-slate-900">
+                      <td className="px-4 py-3">{item.id}</td>
+                      <td className="px-4 py-3">{item.type}</td>
+                      <td className="px-4 py-3">{item.confidence}</td>
+                      <td className="px-4 py-3">{item.action}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6">
+            <h2 className="text-2xl font-bold">High-Tech Workforce Roles</h2>
+            <div className="mt-5 grid gap-4">
+              {roles.map((role) => (
+                <div key={role.title} className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+                  <div className="text-lg font-semibold">{role.title}</div>
+                  <div className="mt-2 text-sm text-slate-400 leading-relaxed">{role.text}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+              <section className="grid lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 rounded-3xl border border-slate-800 bg-slate-900 p-6">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <h2 className="text-2xl font-bold">Add-Value Instructions</h2>
+                <p className="text-slate-400">Use this sequence to pull the system full circle from intake to monetization</p>
+              </div>
+              <div className="rounded-full bg-amber-500/10 px-3 py-1 text-sm text-amber-300">Operational Playbook</div>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+                <div className="text-sm uppercase tracking-[0.2em] text-cyan-300">1. Capture</div>
+                <div className="mt-2 text-lg font-semibold">Receive and identify material</div>
+                <div className="mt-2 text-sm text-slate-400 leading-relaxed">Log source, weight, date, site, and contamination notes. Use the camera layer to classify the material before it is routed.</div>
+              </div>
+              <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+                <div className="text-sm uppercase tracking-[0.2em] text-cyan-300">2. Verify</div>
+                <div className="mt-2 text-lg font-semibold">Confirm confidence and purity</div>
+                <div className="mt-2 text-sm text-slate-400 leading-relaxed">If confidence is high, proceed automatically. If confidence is low, send the item to manual review so operators protect throughput and data quality.</div>
+              </div>
+              <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+                <div className="text-sm uppercase tracking-[0.2em] text-cyan-300">3. Route</div>
+                <div className="mt-2 text-lg font-semibold">Select the highest-value path</div>
+                <div className="mt-2 text-sm text-slate-400 leading-relaxed">Route to manufacturing when purity is high, resale when market value is favorable, and recycling when that is the safest and fastest value recovery path.</div>
+              </div>
+              <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+                <div className="text-sm uppercase tracking-[0.2em] text-cyan-300">4. Monetize</div>
+                <div className="mt-2 text-lg font-semibold">Turn operations into measurable revenue</div>
+                <div className="mt-2 text-sm text-slate-400 leading-relaxed">Show price per pound, processing margin, avoided disposal cost, compliance reporting value, and carbon or sustainability value where applicable.</div>
+              </div>
+            </div>
+            <div className="mt-4 rounded-2xl border border-emerald-800/40 bg-emerald-950/20 p-4 text-sm text-slate-300 leading-relaxed">
+              <span className="font-semibold text-emerald-300">If / then / else logic:</span> If material confidence is 90% or higher and purity is 92% or higher, send to manufacturing. If purity is between 80% and 91%, evaluate resale versus recycling. Else hold for manual review or standard recycling. If carbon accounting applies, add ESG value to the route before final selection.
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6">
+            <h2 className="text-2xl font-bold">Revenue Engine</h2>
+            <div className="mt-5 space-y-3">
+              <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+                <div className="text-sm text-slate-400">Service Revenue</div>
+                <div className="mt-1 font-semibold">Installation, operation, maintenance, training</div>
+              </div>
+              <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+                <div className="text-sm text-slate-400">Processing Revenue</div>
+                <div className="mt-1 font-semibold">Tipping, sorting, aggregation, throughput fees</div>
+              </div>
+              <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+                <div className="text-sm text-slate-400">Product Revenue</div>
+                <div className="mt-1 font-semibold">Resale, feedstock, manufactured goods</div>
+              </div>
+              <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+                <div className="text-sm text-slate-400">Data Revenue</div>
+                <div className="mt-1 font-semibold">Compliance reporting, subscriptions, dashboards, audit support</div>
+              </div>
+              <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+                <div className="text-sm text-slate-400">Impact Revenue</div>
+                <div className="mt-1 font-semibold">Scope 3 support, carbon and sustainability value claims</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="rounded-3xl border border-slate-800 bg-slate-900 p-6">
+          <div className="flex items-center justify-between mb-5">
+            <div>
+              <h2 className="text-2xl font-bold">Knowledge Layer and References</h2>
+              <p className="text-slate-400">Outside anchors that strengthen the DSGE operating story</p>
+            </div>
+            <div className="rounded-full bg-cyan-500/10 px-3 py-1 text-sm text-cyan-300">Credibility Layer</div>
+          </div>
+          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4 text-sm">
+            <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+              <div className="font-semibold">EPA Waste Hierarchy</div>
+              <div className="mt-2 text-slate-400 leading-relaxed">Supports the operational preference for reduction, reuse, and recycling over disposal, which strengthens the diversion and resource recovery narrative.</div>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+              <div className="font-semibold">GHG Protocol Scope 3</div>
+              <div className="mt-2 text-slate-400 leading-relaxed">Supports how DSGE can help customers track value-chain emissions and document measurable environmental outcomes.</div>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+              <div className="font-semibold">SBIR / STTR Commercialization</div>
+              <div className="mt-2 text-slate-400 leading-relaxed">Supports the case that DSGE is not only a service workflow but a scalable technology platform with commercialization pathways.</div>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
+              <div className="font-semibold">NIST AI RMF</div>
+              <div className="mt-2 text-slate-400 leading-relaxed">Supports trustworthy AI operations, especially when computer vision and automated routing influence operational decisions.</div>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
-
-    <div style="border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);border-radius:20px;padding:20px;">
-      <h3>Vision</h3>
-      <p>A scalable system where diversion, workforce, and ESG operate as one.</p>
-    </div>
-
-    <div style="border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);border-radius:20px;padding:20px;">
-      <h3>Values</h3>
-      <p>Integrity · Readiness · Partnership · Execution</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- START / CONTACT -->
-<section id="start">
-  <h2>Start / Contact</h2>
-
-  <div style="margin-top:20px;line-height:2;">
-
-    <div>
-      Email:
-      <a href="mailto:tia@dsge-info.com" style="color:#6ee7b7;">
-        tia@dsge-info.com
-      </a>
-    </div>
-
-    <div>
-      Phone:
-      <br>
-      <a href="tel:7348845925" style="color:#6ee7b7;">734.884.5925</a><br>
-      <a href="tel:5172828301" style="color:#6ee7b7;">517.282.8301</a>
-    </div>
-
-    <div>
-      Address:
-      <br>
-      <a href="https://maps.google.com/?q=4860 Washtenaw Ave Suite I Ann Arbor MI 48108"
-         target="_blank"
-         style="color:#6ee7b7;">
-        4860 Washtenaw Ave Suite I, Ann Arbor, MI 48108
-      </a>
-    </div>
-
-  </div>
-</section>
+  );
+}
